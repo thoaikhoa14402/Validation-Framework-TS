@@ -1,6 +1,4 @@
-export type Result<T> = 
-    | { ok: true, value: T }
-    | { ok: false, message: string }
+import { Result } from "./Primitive/result.interface";
 
 
 interface IValidator<T> {
@@ -10,7 +8,7 @@ interface IValidator<T> {
 type StringRule = 
     | { type: "equal", value: string }
     | { type: "notEqual", value: string }
-    | { type: "minLength", min: number } 
+    | { type: "minLength", min: number }    
     | { type: "maxLength", max: number }
 
 class StringValidator implements IValidator<string> {
