@@ -6,9 +6,7 @@ import { Result } from "./result.interface";
 export type NonNullable<T> = T extends null | undefined ? never : T;
 
 export interface IValidator<T> {
-    validate(value: PrimitiveType, options?: {
-        stopOnFailure: boolean
-    },
+    check(value: PrimitiveType, options?: { stopOnFailure: boolean },
     stack?: Stack<keyof T>, // only for non-primitive types
     ): (ValidationError | Result<T>)[] | Result<T>;
 

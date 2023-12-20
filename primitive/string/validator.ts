@@ -9,6 +9,7 @@ import { Result } from "../result.interface";
 import CustomRule from "./rules/custom.rule";
 import { ValidationErrorContext } from "../../errors/error.ctx";
 import { ValidationError } from "../../errors/validation.error";
+import { ValidatorTemplate } from "../../common/validator-template";
 
 class StringValidator implements IValidator<string> {
     private rules: IStringRule[] = []; // string validation strategies
@@ -24,7 +25,7 @@ class StringValidator implements IValidator<string> {
         return typeof value === 'string';
     }
 
-    validate(value: string, options = { stopOnFailure: true }) {
+    check(value: string, options = { stopOnFailure: true }) {
         const ok = (value: string): Result<string> => ({ ok: true, value: value });
         const errList: ValidationError[] = [];
         
@@ -48,10 +49,11 @@ class StringValidator implements IValidator<string> {
     }
 }   
 
-class StringValidatorBuilder {
+class StringValidatorBuilder extends ValidatorTemplate<string> {
     private validator: StringValidator;
 
     constructor() {
+        super();
         this.validator = new StringValidator();
     }
 
@@ -94,8 +96,8 @@ class StringValidatorBuilder {
         return this;
     }
 
-    validate(value: string, options = { stopOnFailure: true }) {
-        return this.validator.validate(value, options);
+    check(value: string, options = { stopOnFailure: true }) {
+        return this.validator.check(value, options);
     }
 
 }

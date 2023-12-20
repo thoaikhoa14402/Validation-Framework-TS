@@ -1,4 +1,5 @@
 import VFT from "../..";
+import { ValidatorTemplate } from "../../common/validator-template";
 
 // ===================== MAX LENGTH VALIDATION =====================
 // const maxLengthValidator = VFT.string().maxLength(5, 'must be at most 5 characters long');
@@ -40,35 +41,35 @@ import VFT from "../..";
 
 
 // ===================== ARBITRARY REGEX VALIDATION =====================
-// let zipCodeRegex = /\d{5}(-\d{4})?/;
-// const regexValidator = VFT.string().matches(zipCodeRegex);
+let zipCodeRegex = /\d{5}(-\d{4})?/;
+const regexValidator = VFT.string().matches(zipCodeRegex);
 
 // const isValidRegex = regexValidator.validate('90210', { // expected true
 //     stopOnFailure: false
 // });
 
-// // const isValidRegex = regexValidator.validate('1@', { // expected error
-// //     stopOnFailure: false
-// // });
-
-// console.log('isValidRegex: ', isValidRegex);
-
-
-// ===================== CUSTOM VALIDATION ===================== 
-const customValidator = VFT.string().test((value: string, errCtx) => {
-    if (value.startsWith('@')) {
-        return true;
-    }
-    return errCtx!.createError({message: 'Your string is invalid', value: value})
-});
-
-// const customString = customValidator.validate('@20127043', { // expected true
-//     stopOnFailure: false
-// });
-
-const customString = customValidator.validate('20127043', { // expected error
+const isValidRegex = regexValidator.validate('1@', { // expected error
     stopOnFailure: false
 });
 
+console.log('isValidRegex: ', isValidRegex);
 
-console.log('customValidator: ', customString);
+
+// ===================== CUSTOM VALIDATION ===================== 
+// const customValidator = VFT.string().test((value: string, errCtx: any) => {
+//     if (value.startsWith('@')) {
+//         return true;
+//     }
+//     return errCtx!.createError({message: 'Your string is invalid', value: value})
+// });
+
+// // const customString = customValidator.validate('@20127043', { // expected true
+// //     stopOnFailure: false
+// // });
+
+// const customString = customValidator.validate('@20127043', { // expected error
+//     stopOnFailure: false
+// });
+
+
+// console.log('customValidator: ', customString);

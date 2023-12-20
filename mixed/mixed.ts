@@ -1,0 +1,1 @@
+import { IValidator } from "../primitive/validator.interface";
