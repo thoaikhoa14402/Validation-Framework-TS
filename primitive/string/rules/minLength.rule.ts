@@ -4,7 +4,7 @@ import { IStringRule } from "./rule.interface";
 
 export default class MinLengthRule implements IStringRule {
   static ruleName = 'string.rule.min';
-  static errorMessage = 'The length of string is shorter than maximum'
+  static errorMessage = 'The length of string is shorter than minimum'
   private min: number;
 
   constructor(min: number, errorMsg?: string) {
