@@ -1,6 +1,6 @@
 import VFT from "../..";
 
-// ===================== MAX LENGTH VALIDATION =====================
+// ===================== LENGTH VALIDATION =====================
 const maxLengthValidator = VFT.array()
   .maxLength(5)
   .length(2)
@@ -13,5 +13,3 @@ try {
 } catch (e) {
   console.log(e);
 }
-
-// // const result1 = maxLengthValidator.validate('123456'); // expected error
