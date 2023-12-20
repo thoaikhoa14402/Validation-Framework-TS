@@ -5,7 +5,7 @@ import EmailRule from "./rules/email.rule";
 import RegexMatchingRule from "./rules/regex.rule";
 import { IStringRule } from "./rules/rule.interface";
 import { IValidator, NonNullable } from "../validator.interface";
-import { Result } from "../result.interface";
+import { Result } from "../../common/result.interface";
 import CustomRule from "./rules/custom.rule";
 import { ValidationErrorContext } from "../../errors/error.ctx";
 import { ValidationError } from "../../errors/validation.error";

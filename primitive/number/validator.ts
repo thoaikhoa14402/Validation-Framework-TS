@@ -1,11 +1,12 @@
 import RegexMatchingRule from "./rules/regex.rule";
 import { INumberRule } from "./rules/rule.interface";
 import { IValidator, NonNullable } from "../validator.interface";
-import { Result } from "../result.interface";
+import { Result } from "../../common/result.interface";
 import { ValidationErrorContext } from "../../errors/error.ctx";
 import { ValidationError } from "../../errors/validation.error";
 import { IntegerRule,MaxRule,MinRule,NegativeRule,PositiveRule,MatchingRule } from "./rules";
 import CustomRule from "./rules/custom.rule";
+import { ValidatorTemplate } from "../../common/validator-template";
 
 class NumberValidator implements IValidator<number> {
     private rules: INumberRule[] = []; // string validation strategies
@@ -21,7 +22,7 @@ class NumberValidator implements IValidator<number> {
         return typeof value === 'number';
     }
 
-    validate(value: number, options = { stopOnFailure: true }) {
+    check(value: number, options = { stopOnFailure: true }) {
         const ok = (value: number): Result<number> => ({ ok: true, value: value });
         const errList: ValidationError[] = [];
         
@@ -45,10 +46,11 @@ class NumberValidator implements IValidator<number> {
     }
 }   
 
-class NumberValidatorBuilder {
+class NumberValidatorBuilder extends ValidatorTemplate<number> {
     private validator: NumberValidator;
 
     constructor() {
+        super();
         this.validator = new NumberValidator();
     }
 
@@ -96,8 +98,8 @@ class NumberValidatorBuilder {
         return this;
     }
 
-    validate(value: number, options = { stopOnFailure: true }) {
-        return this.validator.validate(value, options);
+    check(value: number, options = { stopOnFailure: true }) {
+        return this.validator.check(value, options);
     }
 
 }

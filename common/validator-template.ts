@@ -1,7 +1,7 @@
 import { ValidationErrorContext } from "../errors/error.ctx";
 import { ValidationError } from "../errors/validation.error";
 import { Stack } from "../helpers/stack";
-import { Result } from "../primitive/result.interface";
+import { Result } from "./result.interface";
 
 export abstract class ValidatorTemplate<T> {
     constructor() {}

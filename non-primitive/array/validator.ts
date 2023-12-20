@@ -1,11 +1,12 @@
 import { IValidator } from "../../primitive/validator.interface";
 import { IArrayRule } from "./rules/rule.interface";
-import { Result } from "../../primitive/result.interface";
+import { Result } from "../../common/result.interface";
 import { ValidationError } from "../../errors/validation.error";
 import NotEmptyRule from "./rules/notEmpty.rule";
 import MinLengthRule from "./rules/minLength.rule";
 import MaxLengthRule from "./rules/maxLength.rule";
 import LengthRule from "./rules/length.rule";
+import { ValidatorTemplate } from "../../common/validator-template";
 
 class ArrayValidator<T extends any[]> implements IValidator<T> {
   private rules: IArrayRule[] = []; // string validation strategies
@@ -24,7 +25,7 @@ class ArrayValidator<T extends any[]> implements IValidator<T> {
     return Array.isArray(value);
   }
 
-  validate(value: unknown, options = { stopOnFailure: true }) {
+  check(value: unknown, options = { stopOnFailure: true }) {
     const err: (msg: string) => Result<T> = (msg) => ({
       ok: false,
       message: msg,
@@ -53,7 +54,7 @@ class ArrayValidator<T extends any[]> implements IValidator<T> {
 
     if (this.iValidator) {
       for (let item of value) {
-        const _res = this.iValidator?.validate(item, {
+        const _res = this.iValidator?.check(item, {
           stopOnFailure: options.stopOnFailure,
         });
         // Check if resultPerKey is Array of ValidationError instance
@@ -82,10 +83,11 @@ class ArrayValidator<T extends any[]> implements IValidator<T> {
   }
 }
 
-class ArrayValidatorBuilder<T extends any[]> {
+class ArrayValidatorBuilder<T extends any[]> extends ValidatorTemplate<T> {
   private validator: ArrayValidator<T>;
 
   constructor() {
+    super();
     this.validator = new ArrayValidator();
   }
 
@@ -123,8 +125,8 @@ class ArrayValidatorBuilder<T extends any[]> {
     return this;
   }
 
-  validate(value: unknown, options = { stopOnFailure: true }) {
-    return this.validator.validate(value, options);
+  check(value: unknown, options = { stopOnFailure: true }) {
+    return this.validator.check(value, options);
   }
 }
 

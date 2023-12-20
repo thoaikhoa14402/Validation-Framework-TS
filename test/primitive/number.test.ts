@@ -3,8 +3,7 @@ import VFT from "../..";
 // // ===================== MAX LENGTH VALIDATION =====================
 // const maxValidator = VFT.number().integer().min(5).negative();
 // try {
-//   const result1 = maxValidator.validate(4.4, { stopOnFailure: false }); // expected true
-//   // const result1 = maxLengthValidator.validate('123456'); // expected error
+//   const result1 = maxValidator.validate(4.4, { stopOnFailure: false }); // expected false
 
 //   console.log("Result of max validator: ", result1);
 // } catch (e) {
@@ -17,14 +16,10 @@ import VFT from "../..";
 
 // const isValidRegex = regexValidator.validate(18, { stopOnFailure: false });
 
-// // const isValidRegex = regexValidator.validate('1@', { // expected error
-// //     stopOnFailure: false
-// // });
-
 // console.log("isValidRegex: ", isValidRegex);
 
 // ===================== CUSTOM VALIDATION =====================
-const customValidator = VFT.number().test((value: number, errCtx) => {
+const customValidator = VFT.number().test((value: number, errCtx: any) => {
   if (value > 7) {
     return true;
   }
@@ -38,7 +33,7 @@ const customValidator = VFT.number().test((value: number, errCtx) => {
 //     stopOnFailure: false
 // });
 
-const customString = customValidator.validate(8, {
+const customString = customValidator.validate(undefined, {
   // expected error
   stopOnFailure: false,
 });

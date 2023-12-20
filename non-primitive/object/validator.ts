@@ -1,4 +1,4 @@
-import { Result } from "../../primitive/result.interface";
+import { Result } from "../../common/result.interface";
 import { IValidator, NonNullable } from "../../primitive/validator.interface";
 import { Stack } from "../../helpers/stack";
 import { ValidationError } from "../../errors/validation.error";
