@@ -1,4 +1,4 @@
-import { ValidationError } from "../errors/validation.error";
+import { ValidationError } from "../common/errors/validation.error";
 import { Stack } from "../helpers/stack";
 import { PrimitiveType } from "../types";
 import { Result } from "../common/result.interface";

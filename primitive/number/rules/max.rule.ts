@@ -1,5 +1,5 @@
-import { errorContext } from "../../../errors";
-import { ValidationError } from "../../../errors/validation.error";
+import { errorContext } from "../../../common/errors";
+import { ValidationError } from "../../../common/errors/validation.error";
 import { INumberRule } from "./rule.interface";
 
 export default class MaxRule implements INumberRule {

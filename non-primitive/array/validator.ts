@@ -1,12 +1,12 @@
 import { IValidator } from "../../primitive/validator.interface";
 import { IArrayRule } from "./rules/rule.interface";
 import { Result } from "../../common/result.interface";
-import { ValidationError } from "../../errors/validation.error";
+import { ValidationError } from "../../common/errors/validation.error";
 import NotEmptyRule from "./rules/notEmpty.rule";
 import MinLengthRule from "./rules/minLength.rule";
 import MaxLengthRule from "./rules/maxLength.rule";
 import LengthRule from "./rules/length.rule";
-import { ValidatorTemplate } from "../../common/validator-template";
+import { ValidatorTemplate } from "../../common/validator.template";
 
 class ArrayValidator<T extends any[]> implements IValidator<T> {
   private rules: IArrayRule[] = []; // string validation strategies

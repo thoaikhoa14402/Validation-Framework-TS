@@ -3,39 +3,53 @@ import VFT from "../..";
 // // ===================== MAX LENGTH VALIDATION =====================
 // const maxValidator = VFT.number().integer().min(5).negative();
 // try {
-//   const result1 = maxValidator.validate(4.4, { stopOnFailure: false }); // expected false
+//   const result1 = maxValidator.validate(4.4); // expected false
 
 //   console.log("Result of max validator: ", result1);
-// } catch (e) {
-//   console.log(e);
+// } catch (err: any) {
+   // console.log('Error messages: ', err.message);
+   // console.log('Validation Errors: ', err.validationErrors);
 // }
 
 // // ===================== REGEX VALIDATION =====================
 // let regex = /^\d{2}([0369]|1[0123456789][0369]|2[0123456789][0369])$/;
 // const regexValidator = VFT.number().matches(regex);
 
-// const isValidRegex = regexValidator.validate(18, { stopOnFailure: false });
+// try {
+//     const result2 = regexValidator.validate(18);
+//     console.log("Result of regex validator: ", result2);
+// } catch(err: any) {
+    // console.log('Error messages: ', err.message);
+    // console.log('Validation Errors: ', err.validationErrors);
+// }
 
-// console.log("isValidRegex: ", isValidRegex);
 
 // ===================== CUSTOM VALIDATION =====================
-const customValidator = VFT.number().test((value: number, errCtx: any) => {
-  if (value > 7) {
-    return true;
-  }
-  return errCtx!.createError({
-    message: "Your number is invalid",
-    value: value,
-  });
-}).max(10).integer();
+// const customValidator = VFT.number().test((value: number, errCtx: any) => {
+//   if (value > 7) {
+//     return true;
+//   }
+//   return errCtx!.createError({
+//     message: `Your number is less than ${value}`,
+//     value: value,
+//   });
+// }).max(10).integer();
 
-// const customString = customValidator.validate('@20127043', { // expected true
-//     stopOnFailure: false
-// });
+// try {
+//   const customString = customValidator.validate(8); // expected true
+//   // const customString = customValidator.validate('@20127043'); // expected error
+//   console.log('Result of custom validator: ', customString);
+// } catch (err: any) {
+    // console.log('Error messages: ', err.message);
+    // console.log('Validation Errors: ', err.validationErrors);
+// }
 
-const customString = customValidator.validate(undefined, {
-  // expected error
-  stopOnFailure: false,
-});
+// ===================== SPECIAL CASE =====================
+// try {
+//     const customString = customValidator.validate(undefined);
+//     console.log("Result of custom validator: ", customString);
+// } catch(err: any) {
+//     console.log('Error messages: ', err.message);
+//     console.log('Validation Errors: ', err.validationErrors);
+// }
 
-console.log("customValidator: ", customString);
