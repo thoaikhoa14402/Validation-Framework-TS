@@ -74,3 +74,43 @@ import VFT from "../..";
 //    console.log('Error messages: ', err.message);
 //    console.log('Validation Errors: ', err.validationErrors);
 // }
+
+// ===================== POSITIVE VALIDATION TRUE =====================
+// const positiveValidator = VFT.number().positive();
+// try {
+//   const positiveResult = positiveValidator.validate(1); // expected true
+//   console.log("Result of positive validator: ", positiveResult);
+// } catch (err: any) {
+//   console.log('Error messages: ', err.message);
+//   console.log('Validation Errors: ', err.validationErrors);
+// }
+
+// ===================== POSITIVE VALIDATION FALSE =====================
+// const positiveValidator2 = VFT.number().positive();
+// try {
+//   const positiveResult = positiveValidator.validate(-1); // expected false
+//   console.log("Result of positive validator: ", positiveResult);
+// } catch (err: any) {
+//   console.log('Error messages: ', err.message);
+//   console.log('Validation Errors: ', err.validationErrors);
+// }
+
+// ===================== NEGATIVE VALIDATION TRUE =====================
+// const negativeValidator = VFT.number().negative();
+// try {
+//   const positiveResult = negativeValidator.validate(-1); // expected true
+//   console.log("Result of positive validator: ", positiveResult);
+// } catch (err: any) {
+//   console.log('Error messages: ', err.message);
+//   console.log('Validation Errors: ', err.validationErrors);
+// }
+
+// ===================== NEGATIVE VALIDATION FALSE =====================
+// const negtiveValidator2 = VFT.number().negative();
+// try {
+//   const positiveResult = negtiveValidator2.validate(1); // expected false
+//   console.log("Result of positive validator: ", positiveResult);
+// } catch (err: any) {
+//   console.log('Error messages: ', err.message);
+//   console.log('Validation Errors: ', err.validationErrors);
+// }
