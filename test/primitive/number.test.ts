@@ -1,14 +1,14 @@
 import VFT from "../..";
 
-// // ===================== MAX LENGTH VALIDATION =====================
+// ===================== MAX LENGTH VALIDATION =====================
 // const maxValidator = VFT.number().integer().min(5).negative();
 // try {
 //   const result1 = maxValidator.validate(4.4); // expected false
 
 //   console.log("Result of max validator: ", result1);
 // } catch (err: any) {
-   // console.log('Error messages: ', err.message);
-   // console.log('Validation Errors: ', err.validationErrors);
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
 // }
 
 // // ===================== REGEX VALIDATION =====================
@@ -53,3 +53,13 @@ import VFT from "../..";
 //     console.log('Validation Errors: ', err.validationErrors);
 // }
 
+// ===================== RANGE VALIDATION =====================
+const maxValidator = VFT.number().integer().min(5).range(5, 8);
+try {
+  const result1 = maxValidator.validate(9); // expected false
+
+  console.log("Result of max validator: ", result1);
+} catch (err: any) {
+   console.log('Error messages: ', err.message);
+   console.log('Validation Errors: ', err.validationErrors);
+}
