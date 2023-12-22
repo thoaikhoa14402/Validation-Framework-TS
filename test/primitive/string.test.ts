@@ -82,12 +82,12 @@ try {
 
 
 // ===================== CUSTOM VALIDATION ===================== 
-const customValidator = VFT.string().test((value: string, errCtx: any) => {
-    if (value.startsWith('@')) {
-        return true;
-    }
-    return errCtx!.createError({message: 'Your string is invalid', value: value})
-});
+// const customValidator = VFT.string().test((value: string, errCtx: any) => {
+//     if (value.startsWith('@')) {
+//         return true;
+//     }
+//     return errCtx!.createError({message: 'Your string is invalid', value: value})
+// });
 
 // try {
 // // const customString = customValidator.validate('@20127043'); // expected true 
@@ -98,6 +98,25 @@ const customValidator = VFT.string().test((value: string, errCtx: any) => {
 //     console.log('Validation Errors: ', err.validationErrors);
 // }
 
+// ===================== UPPERCASE CASE =====================
+// const upperCaseValidator = VFT.string().upperCase();
+// try {
+//     const customString = upperCaseValidator.validate('aBc');
+//     console.log("Result of custom validator: ", customString);
+// } catch(err: any) {
+//     console.log('Error messages: ', err.message);
+//     console.log('Validation Errors: ', err.validationErrors);
+// }
+
+//===================== SPECIAL CHARACTER CASE =====================
+const upperCaseValidator = VFT.string().upperCase().specialCharacter();
+try {
+    const customString = upperCaseValidator.validate('aBc#');
+    console.log("Result of custom validator: ", customString);
+} catch(err: any) {
+    console.log('Error messages: ', err.message);
+    console.log('Validation Errors: ', err.validationErrors);
+}
 
 // ===================== SPECIAL CASE =====================
 // try {
