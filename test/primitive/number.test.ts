@@ -54,12 +54,23 @@ import VFT from "../..";
 // }
 
 // ===================== RANGE VALIDATION =====================
-const maxValidator = VFT.number().integer().min(5).range(5, 8);
-try {
-  const result1 = maxValidator.validate(9); // expected false
+// const maxValidator = VFT.number().integer().min(5).range(5, 8);
+// try {
+//   const result1 = maxValidator.validate(7); // expected false
 
-  console.log("Result of max validator: ", result1);
-} catch (err: any) {
-   console.log('Error messages: ', err.message);
-   console.log('Validation Errors: ', err.validationErrors);
-}
+//   console.log("Result of max validator: ", result1);
+// } catch (err: any) {
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
+// }
+
+// ===================== DECIMAL VALIDATION =====================
+// const maxValidator = VFT.number().min(5).decimal();
+// try {
+//   const result1 = maxValidator.validate(7.2); // expected true
+
+//   console.log("Result of max validator: ", result1);
+// } catch (err: any) {
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
+// }

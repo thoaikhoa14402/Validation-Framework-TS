@@ -4,7 +4,7 @@ import { IValidator, NonNullable } from "../validator.interface";
 import { Result } from "../../common/result.interface";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 import { ValidationError } from "../../common/errors/validation.error";
-import { IntegerRule,MaxRule,MinRule,NegativeRule,PositiveRule,MatchingRule, RangeRule } from "./rules";
+import { IntegerRule,MaxRule,MinRule,NegativeRule,PositiveRule,MatchingRule, RangeRule, DecimalRule } from "./rules";
 import CustomRule from "./rules/custom.rule";
 import { ValidatorTemplate } from "../../common/validator.template";
 
@@ -105,8 +105,12 @@ class NumberValidatorBuilder extends ValidatorTemplate<number> {
     range(min: number, max: number, errMsg?: string) {
         this.validator.addRule(new RangeRule(min, max, errMsg));
         return this;
-      }
+    }
 
+    decimal(errMsg?: string) {
+        this.validator.addRule(new DecimalRule(errMsg));
+        return this;
+      }
 }
 
 export default () => new NumberValidatorBuilder();
