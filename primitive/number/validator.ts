@@ -110,7 +110,7 @@ class NumberValidatorBuilder extends ValidatorTemplate<number> {
     decimal(errMsg?: string) {
         this.validator.addRule(new DecimalRule(errMsg));
         return this;
-      }
+    }
 }
 
 export default () => new NumberValidatorBuilder();

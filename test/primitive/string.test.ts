@@ -111,7 +111,7 @@ try {
 //===================== SPECIAL CHARACTER CASE =====================
 const upperCaseValidator = VFT.string().upperCase().specialCharacter();
 try {
-    const customString = upperCaseValidator.validate('aBc#');
+    const customString = upperCaseValidator.validate('abc#');
     console.log("Result of custom validator: ", customString);
 } catch(err: any) {
     console.log('Error messages: ', err.message);
