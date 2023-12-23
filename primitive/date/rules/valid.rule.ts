@@ -11,7 +11,7 @@ export default class IsValid implements IDateRule {
   }
 
   validate(value: string): boolean | ValidationError {
-    if(!isNaN(new Date(value).getTime())) {
+    if(isNaN(new Date(value).getTime())) {
       return errorContext.createError({
         message: IsValid.errorMessage,
         type: IsValid.ruleName,

@@ -1,0 +1,1 @@
+export {default as IsValid} from './valid.rule';
