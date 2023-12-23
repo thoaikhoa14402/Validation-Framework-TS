@@ -1,5 +1,7 @@
 import IsValidRule from "./rules/valid.rule";
-
+import EqualRule from "./rules/equal.rule";
+import LaterRule from "./rules/later.rule";
+import EarlierRule from "./rules/earlier.rule";
 import { IDateRule } from "./rules/rule.interface";
 import { IValidator, NonNullable } from "../validator.interface";
 import { Result } from "../../common/result.interface";
@@ -65,6 +67,21 @@ class DateValidatorBuilder extends ValidatorTemplate<string> {
 
     isValid(errMsg?: string) {
         this.validator.addRule(new IsValidRule(errMsg));
+        return this;
+    }
+
+    equal(threshold: string, errMsg?: string) {
+        this.validator.addRule(new EqualRule(threshold, errMsg));
+        return this;
+    }
+
+    later(threshold: string, errMsg?: string) {
+        this.validator.addRule(new LaterRule(threshold, errMsg));
+        return this;
+    }
+
+    earlier(threshold: string, errMsg?: string) {
+        this.validator.addRule(new EarlierRule(threshold, errMsg));
         return this;
     }
 
