@@ -19,23 +19,30 @@ import VFT from "../..";
 // console.log("isValidRegex: ", isValidRegex);
 
 // ===================== CUSTOM VALIDATION =====================
-const customValidator = VFT.number().test((value: number, errCtx: any) => {
-  if (value > 7) {
-    return true;
-  }
-  return errCtx!.createError({
-    message: "Your number is invalid",
-    value: value,
+const customValidator = VFT.number()
+  .test((value: number, errCtx: any) => {
+    if (value > 7) {
+      return true;
+    }
+    return errCtx!.createError({
+      message: "Your number is invalid",
+      value: value,
+    });
+  })
+  .max(10)
+  .integer();
+
+try {
+  const customString = customValidator.validate(5, {
+    // expected true
+    stopOnFailure: false,
   });
-}).max(10).integer();
+  console.log("customValidator: ", customString);
+} catch (e) {
+  console.log(e);
+}
 
-// const customString = customValidator.validate('@20127043', { // expected true
-//     stopOnFailure: false
+// const customString = customValidator.validate(undefined, {
+//   // expected error
+//   stopOnFailure: false,
 // });
-
-const customString = customValidator.validate(undefined, {
-  // expected error
-  stopOnFailure: false,
-});
-
-console.log("customValidator: ", customString);
