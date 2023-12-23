@@ -1,6 +1,6 @@
 import RegexMatchingRule from "./rules/regex.rule";
 import { INumberRule } from "./rules/rule.interface";
-import { IValidator, NonNullable } from "../validator.interface";
+import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Result } from "../../common/result.interface";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 import { ValidationError } from "../../common/errors/validation.error";

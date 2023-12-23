@@ -1,4 +1,4 @@
-import { IValidator } from "../../primitive/validator.interface";
+import { IValidator } from "../../common/validator.interface";
 import { IArrayRule } from "./rules/rule.interface";
 import { Result } from "../../common/result.interface";
 import { ValidationError } from "../../common/errors/validation.error";

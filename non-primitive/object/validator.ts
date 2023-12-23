@@ -1,5 +1,5 @@
 import { Result } from "../../common/result.interface";
-import { IValidator, NonNullable } from "../../primitive/validator.interface";
+import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Stack } from "../../helpers/stack";
 import { ValidationError } from "../../common/errors/validation.error";
 import { ValidatorTemplate } from "../../common/validator.template";
@@ -101,14 +101,13 @@ class ObjectValidator<T extends object> extends ValidatorTemplate<T> implements 
         if (this.objectSchema) {
             Object.assign(this.objectSchema, newObjectSchema);
         }
+        this.results = [];
         return this;
     }
 
     clone() {
         return new ObjectValidator({...this.objectSchema});
     }
-
-   
 }
 
 
