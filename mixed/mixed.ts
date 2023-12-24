@@ -1,1 +1,1 @@
-import { IValidator } from "../primitive/validator.interface";
+import { IValidator } from "../common/validator.interface";

@@ -3,7 +3,7 @@ import EqualRule from "./rules/equal.rule";
 import LaterRule from "./rules/later.rule";
 import EarlierRule from "./rules/earlier.rule";
 import { IDateRule } from "./rules/rule.interface";
-import { IValidator, NonNullable } from "../validator.interface";
+import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Result } from "../../common/result.interface";
 // import CustomRule from "./rules/custom.rule";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";

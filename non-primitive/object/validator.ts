@@ -1,5 +1,5 @@
 import { Result } from "../../common/result.interface";
-import { IValidator, NonNullable } from "../../primitive/validator.interface";
+import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Stack } from "../../helpers/stack";
 import { ValidationError } from "../../common/errors/validation.error";
 import { ValidatorTemplate } from "../../common/validator.template";
@@ -44,15 +44,6 @@ class ObjectValidator<T extends object> extends ValidatorTemplate<T> implements 
         if (stack && !stack.isEmpty()) {
             this.errorPath = stack
         } else this.errorPath = new Stack<keyof T>();
-
-        // First check that the value is an object and not other type
-        // if (value === null || value === undefined) {
-        //     return err("Value cannot be null or undefined!")
-        // } else if (Array.isArray(value)) {
-        //     return err("Value must be an object but was an array!")
-        // } else if (typeof value !== 'object') {
-        //     return err(`Value must be an object but was ${typeof value}`)
-        // }
 
         // Get keys of both expected object, and the value
         const expectedKeys = Object.getOwnPropertyNames(this.objectSchema);
@@ -101,6 +92,7 @@ class ObjectValidator<T extends object> extends ValidatorTemplate<T> implements 
         if (this.objectSchema) {
             Object.assign(this.objectSchema, newObjectSchema);
         }
+        this.results = [];
         return this;
     }
 
@@ -108,7 +100,6 @@ class ObjectValidator<T extends object> extends ValidatorTemplate<T> implements 
         return new ObjectValidator({...this.objectSchema});
     }
 
-   
 }
 
 

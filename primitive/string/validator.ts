@@ -4,7 +4,7 @@ import MaxLengthRule from "./rules/maxLength.rule";
 import EmailRule from "./rules/email.rule";
 import RegexMatchingRule from "./rules/regex.rule";
 import { IStringRule } from "./rules/rule.interface";
-import { IValidator, NonNullable } from "../validator.interface";
+import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Result } from "../../common/result.interface";
 import CustomRule from "./rules/custom.rule";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
