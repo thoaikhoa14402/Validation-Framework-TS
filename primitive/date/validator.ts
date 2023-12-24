@@ -9,6 +9,7 @@ import { Result } from "../../common/result.interface";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 import { ValidationError } from "../../common/errors/validation.error";
 import { ValidatorTemplate } from "../../common/validator.template";
+import { LeapYearRule } from "./rules";
 
 class DateValidator implements IValidator<string> {
     private rules: IDateRule[] = []; // string validation strategies
@@ -87,6 +88,11 @@ class DateValidatorBuilder extends ValidatorTemplate<string> {
 
     check(value: string, options = { stopOnFailure: true }) {
         return this.validator.check(value, options);
+    }
+
+    leapYear(errMsg?: string) {
+        this.validator.addRule(new LeapYearRule(errMsg));
+        return this;
     }
 
 }

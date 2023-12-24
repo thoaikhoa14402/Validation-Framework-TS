@@ -5,9 +5,10 @@ import { IValidator, NonNullable } from "../validator.interface";
 import { Result } from "../../common/result.interface";
 // import CustomRule from "./rules/custom.rule";
 import { ValidatorTemplate } from "../../common/validator.template";
-import { TrueFalseRule } from "./rules";
 import { Stack } from "../../helpers/stack";
-import { TruthyRule } from "./rules/truthy.rule";
+import TruthyRule from "./rules/truthy.rule";
+import FalsyRule from "./rules/falsy.rule";
+import TruthyFalsyChecker from "../../helpers/TruthyFalsyChecker";
 
 class BooleanValidator implements IValidator<boolean> {
     private rules: IBooleanRule[] = [];
@@ -21,7 +22,7 @@ class BooleanValidator implements IValidator<boolean> {
 
     _typeCheck(value: any): value is NonNullable<any> {
         if (value instanceof String) value = value.valueOf();
-        return typeof value === 'boolean';
+        return typeof value === 'boolean' || value === undefined || value === null || typeof TruthyFalsyChecker.check(value) === "boolean";
     }
 
     check(value: any, options = { stopOnFailure: true }) {
@@ -74,13 +75,18 @@ class BooleanValidatorBuilder extends ValidatorTemplate<boolean> {
         return this;
     }
 
-    trueFalse(errMsg: string) {
-        this.validator.addRule(new TrueFalseRule(errMsg));
+    // trueFalse(errMsg: string) {
+    //     this.validator.addRule(new TrueFalseRule(errMsg));
+    //     return this;
+    // }
+
+    truthy(errMsg?: string) {
+        this.validator.addRule(new TruthyRule(errMsg));
         return this;
     }
 
-    truthy(errMsg: string) {
-        this.validator.addRule(new TruthyRule(errMsg));
+    falsy(errMsg?: string) {
+        this.validator.addRule(new FalsyRule(errMsg));
         return this;
     }
 }

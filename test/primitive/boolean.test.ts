@@ -1,15 +1,15 @@
 import VFT from "../..";
 
 // ===================== TRUE FALSE VALIDATION BY BOOLEAN=====================
-// const boolValidator = VFT.boolean().truthy();
-// try {
-//   const result1 = boolValidator.validate(true, {stopOnFailure: false}); // expected true
-//   const result1 = boolValidator.validate(1, {stopOnFailure: false}); // expected false
-//   console.log("Result of max validator: ", result1);
-// } catch (err: any) {
-//    console.log('Error messages: ', err.message);
-//    console.log('Validation Errors: ', err.validationErrors);
-// }
+const boolValidator = VFT.boolean().truthy();
+try {
+  // const result1 = boolValidator.validate(true, {stopOnFailure: false}); // expected true
+  const result1 = boolValidator.validate(false, {stopOnFailure: false}); // expected false
+  console.log("Result of boolean validator: ", result1);
+} catch (err: any) {
+   console.log('Error messages: ', err.message);
+   console.log('Validation Errors: ', err.validationErrors);
+}
 
 
 // ===================== TRUE FALSE VALIDATION BY FUNCTION=====================
@@ -28,26 +28,26 @@ import VFT from "../..";
 
 // try {
 //   const result1 = boolValidator.validate(isPrime(7), {stopOnFailure: false}); // expected true
-//   // const result1 = boolValidator.validate(incrementNumber(7), { stopOnFailure: false }); // expected false
-//   console.log("Result of max validator: ", result1);
+//   const result1 = boolValidator.validate(incrementNumber(7), { stopOnFailure: false }); // expected false
+//   console.log("Result of boolean validator: ", result1);
 // } catch (err: any) {
 //   console.log('Error messages: ', err.message);
 //   console.log('Validation Errors: ', err.validationErrors);
 // }
 
 // ===================== TRUE FALSE VALIDATION BY TERNARY OPERATOR =====================
-const boolValidator = VFT.boolean().truthy();
+// const boolValidator = VFT.boolean().truthy();
 
-const num: number = 0;
+// const num: number = 0;
 
-try {
-  //check whether num is equal to 0
-  const result1 = boolValidator.validate(num === 0 ? true : false, {stopOnFailure: false}); // expected true
-  // const result1 = boolValidator.validate(num === 0, {stopOnFailure: false}); // expected true
-  // const result1 = boolValidator.validate(num === 0 ? "true" : "false", { stopOnFailure: false }); // expected false
-  console.log("Result of max validator: ", result1);
-} catch (err: any) {
-  console.log('Error messages: ', err.message);
-  console.log('Validation Errors: ', err.validationErrors);
-}
+// try {
+//   //check whether num is equal to 0
+//   // const result1 = boolValidator.validate(num === 0 ? true : false, {stopOnFailure: false}); // expected true
+//   // const result1 = boolValidator.validate(num === 0, {stopOnFailure: false}); // expected true
+//   const result1 = boolValidator.validate(num === 0 ? "true" : "false", { stopOnFailure: false }); // expected false
+//   console.log("Result of boolean validator: ", result1);
+// } catch (err: any) {
+//   console.log('Error messages: ', err.message);
+//   console.log('Validation Errors: ', err.validationErrors);
+// }
 
