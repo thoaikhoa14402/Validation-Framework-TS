@@ -45,15 +45,6 @@ class ObjectValidator<T extends object> extends ValidatorTemplate<T> implements 
             this.errorPath = stack
         } else this.errorPath = new Stack<keyof T>();
 
-        // First check that the value is an object and not other type
-        // if (value === null || value === undefined) {
-        //     return err("Value cannot be null or undefined!")
-        // } else if (Array.isArray(value)) {
-        //     return err("Value must be an object but was an array!")
-        // } else if (typeof value !== 'object') {
-        //     return err(`Value must be an object but was ${typeof value}`)
-        // }
-
         // Get keys of both expected object, and the value
         const expectedKeys = Object.getOwnPropertyNames(this.objectSchema);
         const actualKeys = Object.getOwnPropertyNames(value);
@@ -108,6 +99,7 @@ class ObjectValidator<T extends object> extends ValidatorTemplate<T> implements 
     clone() {
         return new ObjectValidator({...this.objectSchema});
     }
+
 }
 
 
