@@ -19,10 +19,9 @@ import VFT from "../..";
 //     const result2 = regexValidator.validate(18);
 //     console.log("Result of regex validator: ", result2);
 // } catch(err: any) {
-    // console.log('Error messages: ', err.message);
-    // console.log('Validation Errors: ', err.validationErrors);
+// console.log('Error messages: ', err.message);
+// console.log('Validation Errors: ', err.validationErrors);
 // }
-
 
 // ===================== CUSTOM VALIDATION =====================
 // const customValidator = VFT.number().test((value: number, errCtx: any) => {
@@ -40,8 +39,8 @@ import VFT from "../..";
 //   // const customString = customValidator.validate('@20127043'); // expected error
 //   console.log('Result of custom validator: ', customString);
 // } catch (err: any) {
-    // console.log('Error messages: ', err.message);
-    // console.log('Validation Errors: ', err.validationErrors);
+// console.log('Error messages: ', err.message);
+// console.log('Validation Errors: ', err.validationErrors);
 // }
 
 // ===================== SPECIAL CASE =====================
@@ -65,9 +64,10 @@ import VFT from "../..";
 // }
 
 // ===================== DECIMAL VALIDATION =====================
-// const maxValidator = VFT.number().min(5).decimal();
+// const maxValidator = VFT.number().decimal();
 // try {
-//   const result1 = maxValidator.validate(7.2); // expected true
+// //   const result1 = maxValidator.validate(123.456); // expected true
+//   const result1 = maxValidator.validate(7); // expected false
 
 //   console.log("Result of max validator: ", result1);
 // } catch (err: any) {
@@ -114,3 +114,16 @@ import VFT from "../..";
 //   console.log('Error messages: ', err.message);
 //   console.log('Validation Errors: ', err.validationErrors);
 // }
+
+// ===================== MIXED VALIDATION TRUE =====================
+const mixedValidator = VFT.number().addMethod("isEqual", (x: number) => x >= 3);
+
+const chainValidator = mixedValidator.isEqual();
+
+try {
+  const result1 = chainValidator.validate(2, { stopOnFailure: false }); // expected true
+  console.log("Result of mixed validator: ", result1);
+} catch (err: any) {
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
+}

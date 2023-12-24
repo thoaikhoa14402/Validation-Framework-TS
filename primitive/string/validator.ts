@@ -46,7 +46,7 @@ class StringValidator implements IValidator<string> {
         return ok(value);
     }
 
-    addRule(rule: IStringRule) {
+    addRule(rule: IStringRule)     {
         this.rules.push(rule);
     }
 }   

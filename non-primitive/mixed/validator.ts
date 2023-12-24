@@ -42,6 +42,10 @@ class MixedValidator<T extends any> implements IValidator<T> {
   }
 }
 
+interface AnyMethods {
+  [key: string]: (...args: any[]) => any
+}
+
 class MixedValidatorBuilder<T extends any> extends ValidatorTemplate<T> {
   private validator: MixedValidator<T>;
   [key: string]: any;
@@ -61,15 +65,20 @@ class MixedValidatorBuilder<T extends any> extends ValidatorTemplate<T> {
   }
 
   addMethod(
-    type: any,
     name: string,
     implementation: (value: any) => boolean | ValidationError
   ) {
-    type[name] = () => {
+    // Object.assign(this, {
+    //   [name]: () => {
+    //     this.validator.addRule(new MixedRule(implementation));
+    //     return this;
+    //   }
+    // })
+    this[name] = () => {
       this.validator.addRule(new MixedRule(implementation));
       return this;
-    };
-    console.log(type[name]);
+    }
+    return this;
     // } else {
     //   console.error(`Method ${name} already exists in ${type.name}`);
     // }

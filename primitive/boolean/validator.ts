@@ -22,7 +22,8 @@ class BooleanValidator implements IValidator<boolean> {
 
     _typeCheck(value: any): value is NonNullable<any> {
         if (value instanceof String) value = value.valueOf();
-        return typeof value === 'boolean' || value === undefined || value === null || typeof TruthyFalsyChecker.check(value) === "boolean";
+        // return typeof value === 'boolean' || value === undefined || value === null || typeof TruthyFalsyChecker.check(value) === "boolean";
+        return typeof value === 'boolean';
     }
 
     check(value: any, options = { stopOnFailure: true }) {
