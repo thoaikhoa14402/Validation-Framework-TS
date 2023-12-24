@@ -11,7 +11,7 @@ export default class DecimalRule implements INumberRule {
   }
 
   validate(value: number): boolean | ValidationError {
-    if (typeof value !== 'number' || isNaN(value)) {
+    if (typeof value !== 'number' || isNaN(value) || Number.isInteger(value)) {
       return errorContext.createError({
         message: DecimalRule.errorMessage,
         type: DecimalRule.ruleName,

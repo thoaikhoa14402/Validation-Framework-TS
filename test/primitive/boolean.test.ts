@@ -1,15 +1,15 @@
 import VFT from "../..";
 
 // ===================== TRUE FALSE VALIDATION BY BOOLEAN=====================
-const boolValidator = VFT.boolean().truthy();
-try {
-  // const result1 = boolValidator.validate(true, {stopOnFailure: false}); // expected true
-  const result1 = boolValidator.validate(false, {stopOnFailure: false}); // expected false
-  console.log("Result of boolean validator: ", result1);
-} catch (err: any) {
-   console.log('Error messages: ', err.message);
-   console.log('Validation Errors: ', err.validationErrors);
-}
+// const boolValidator = VFT.boolean().truthy();
+// try {
+//   // const result1 = boolValidator.validate(true, {stopOnFailure: false}); // expected true
+//   const result1 = boolValidator.validate(false, {stopOnFailure: false}); // expected false
+//   console.log("Result of boolean validator: ", result1);
+// } catch (err: any) {
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
+// }
 
 
 // ===================== TRUE FALSE VALIDATION BY FUNCTION=====================
@@ -27,7 +27,7 @@ try {
 // }
 
 // try {
-//   const result1 = boolValidator.validate(isPrime(7), {stopOnFailure: false}); // expected true
+//   // const result1 = boolValidator.validate(isPrime(7), {stopOnFailure: false}); // expected true
 //   const result1 = boolValidator.validate(incrementNumber(7), { stopOnFailure: false }); // expected false
 //   console.log("Result of boolean validator: ", result1);
 // } catch (err: any) {
