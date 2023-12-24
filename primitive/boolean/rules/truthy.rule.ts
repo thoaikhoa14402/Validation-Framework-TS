@@ -2,7 +2,7 @@ import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
 import { IBooleanRule } from "./rule.interface";
 
-export class TruthyRule implements IBooleanRule {
+export default class TruthyRule implements IBooleanRule {
     static ruleName = 'boolean.rule.truthy';
     static errorMessage = 'The value is not truthy';
   

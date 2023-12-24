@@ -6,8 +6,8 @@ import { Result } from "../../common/result.interface";
 // import CustomRule from "./rules/custom.rule";
 import { ValidatorTemplate } from "../../common/validator.template";
 import { Stack } from "../../helpers/stack";
-import { TruthyRule } from "./rules/truthy.rule";
-import { FalsyRule } from "./rules/falsy.rule";
+import TruthyRule from "./rules/truthy.rule";
+import FalsyRule from "./rules/falsy.rule";
 import TruthyFalsyChecker from "../../helpers/TruthyFalsyChecker";
 
 class BooleanValidator implements IValidator<boolean> {
@@ -80,12 +80,12 @@ class BooleanValidatorBuilder extends ValidatorTemplate<boolean> {
     //     return this;
     // }
 
-    truthy(errMsg: string) {
+    truthy(errMsg?: string) {
         this.validator.addRule(new TruthyRule(errMsg));
         return this;
     }
 
-    falsy(errMsg: string) {
+    falsy(errMsg?: string) {
         this.validator.addRule(new FalsyRule(errMsg));
         return this;
     }

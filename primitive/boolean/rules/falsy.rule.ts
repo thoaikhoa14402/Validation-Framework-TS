@@ -2,7 +2,7 @@ import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
 import { IBooleanRule } from "./rule.interface";
 
-export class FalsyRule implements IBooleanRule {
+export default class FalsyRule implements IBooleanRule {
     static ruleName = 'boolean.rule.falsy';
     static errorMessage = 'The value is not falsy';
   
