@@ -116,14 +116,16 @@ import VFT from "../..";
 // }
 
 // ===================== MIXED VALIDATION TRUE =====================
-const mixedValidator = VFT.number().addMethod("isEqual", (x: number) => x >= 3);
+// const mixedValidator = VFT.number()
+//   .addMethod("isGreater", (x: number) => x >= 3, "no greater")
+//   .addMethod("isLess", (x: number) => x < 5, "no less");
 
-const chainValidator = mixedValidator.isEqual();
+// const chainValidator = mixedValidator.isGreater().isLess().negative();
 
-try {
-  const result1 = chainValidator.validate(2, { stopOnFailure: false }); // expected true
-  console.log("Result of mixed validator: ", result1);
-} catch (err: any) {
-  console.log("Error messages: ", err.message);
-  console.log("Validation Errors: ", err.validationErrors);
-}
+// try {
+//   const result1 = chainValidator.validate(1, { stopOnFailure: false });
+//   console.log("Result of mixed validator: ", result1);
+// } catch (err: any) {
+//   console.log("Error messages: ", err.message);
+//   console.log("Validation Errors: ", err.validationErrors);
+// }

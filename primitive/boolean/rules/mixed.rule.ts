@@ -1,17 +1,16 @@
 import { ValidationErrorContext } from "../../../common/errors/error.ctx";
 import { ValidationError } from "../../../common/errors/validation.error";
 import errorCtx from "../../../common/errors/error.ctx";
+import { IBooleanRule } from "./rule.interface";
 import { errorContext } from "../../../common/errors";
-import { INumberRule } from "./rule.interface";
 
-export default class MixedRule implements INumberRule {
+export default class MixedRule implements IBooleanRule {
   private callback: (value: any) => boolean | ValidationError;
-  static ruleName = "number.rule.mixed";
+  static ruleName = "boolean.rule.mixed";
   static errorMessage = "The validation is error";
 
-  constructor(callback: (value: any) => boolean | ValidationError, errorMsg?: string) {
+  constructor(callback: (value: any) => boolean | ValidationError) {
     this.callback = callback;
-    if(errorMsg) MixedRule.errorMessage = errorMsg
   }
 
   validate(value: any) {

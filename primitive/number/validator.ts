@@ -125,10 +125,11 @@ class NumberValidatorBuilder extends ValidatorTemplate<number> {
 
   addMethod(
     name: string,
-    implementation: (value: any) => boolean | ValidationError
+    implementation: (value: any) => boolean | ValidationError,
+    errMsg?: string
   ) {
     this[name] = () => {
-      this.validator.addRule(new MixedRule(implementation));
+      this.validator.addRule(new MixedRule(implementation, errMsg));
       return this;
     };
     return this;
