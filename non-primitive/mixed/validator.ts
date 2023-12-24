@@ -1,9 +1,12 @@
-import { IValidator } from "../../primitive/validator.interface";
+import { IValidator } from "../../common/validator.interface";
 import { Result } from "../../common/result.interface";
 import { ValidationError } from "../../common/errors/validation.error";
 import { ValidatorTemplate } from "../../common/validator.template";
+import { IMixedRule } from "./rule.interface";
+import MixedRule from "./rule";
 
 class MixedValidator<T extends any> implements IValidator<T> {
+  private rules: IMixedRule[] = []; // string validation strategies
   private iValidator?: IValidator<any>;
   private results: (ValidationError | Result<T>)[];
 
@@ -15,29 +18,32 @@ class MixedValidator<T extends any> implements IValidator<T> {
     return value !== null && value !== undefined;
   }
 
-  check(value: unknown, options = { stopOnFailure: true }) {
-    const err: (msg: string) => Result<T> = (msg) => ({
-      ok: false,
-      message: msg,
-    });
-
-    // First check that the value is an object and not other type
-    if (value === null || value === undefined) {
-      return err("Value cannot be null or undefined!");
-    } else if (!Array.isArray(value)) {
-      return err(`Value must be an array but was ${typeof value}`);
-    }
-
+  check(value: any, options = { stopOnFailure: true }) {
+    const ok = (value: any): Result<any> => ({ ok: true, value: value });
     const errList: ValidationError[] = [];
 
-    return this.results.length > 0
-      ? this.results
-      : ({ ok: true, value: value as T } as Result<T>);
+    for (let rule of this.rules) {
+      const result = rule.validate(value);
+      if (result instanceof ValidationError) {
+        if (options.stopOnFailure) {
+          throw result;
+        }
+        errList.push(result);
+      }
+    }
+
+    if (errList.length) return errList;
+
+    return ok(value);
   }
 
-  // addRule(rule: IArrayRule) {
-  //   this.rules.push(rule);
-  // }
+  addRule(rule: IMixedRule) {
+    this.rules.push(rule);
+  }
+}
+
+interface AnyMethods {
+  [key: string]: (...args: any[]) => any
 }
 
 class MixedValidatorBuilder<T extends any> extends ValidatorTemplate<T> {
@@ -58,12 +64,24 @@ class MixedValidatorBuilder<T extends any> extends ValidatorTemplate<T> {
     return this;
   }
 
-  addMethod(type: any, name: string, implementation: Function) {
-    if (!(name in type.prototype)) {
-      type.prototype[name] = implementation;
-    } else {
-      console.error(`Method ${name} already exists in ${type.name}`);
+  addMethod(
+    name: string,
+    implementation: (value: any) => boolean | ValidationError
+  ) {
+    // Object.assign(this, {
+    //   [name]: () => {
+    //     this.validator.addRule(new MixedRule(implementation));
+    //     return this;
+    //   }
+    // })
+    this[name] = () => {
+      this.validator.addRule(new MixedRule(implementation));
+      return this;
     }
+    return this;
+    // } else {
+    //   console.error(`Method ${name} already exists in ${type.name}`);
+    // }
   }
 
   check(value: unknown, options = { stopOnFailure: true }) {
