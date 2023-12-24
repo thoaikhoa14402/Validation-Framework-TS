@@ -1,6 +1,6 @@
 import * as PrimitiveValidators from './primitive';
 import * as NonPrimitiveValidators from './non-primitive';
-import { ValidatorTemplate } from './common/validator-template';
+import { ValidatorTemplate } from './common/validator.template';
 import validator from './primitive/string/validator';
 
 const allPrimitiveValidators = Object.entries(PrimitiveValidators).map(([key, validator]) => ({

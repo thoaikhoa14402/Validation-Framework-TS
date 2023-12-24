@@ -10,6 +10,7 @@ try {
     stopOnFailure: false,
   }); // expected true
   console.log("Result of max length validator: ", result1);
-} catch (e) {
-  console.log(e);
+} catch (err: any) {
+    console.log('Error messages: ', err.message);
+    console.log('Validation Errors: ', err.validationErrors);
 }

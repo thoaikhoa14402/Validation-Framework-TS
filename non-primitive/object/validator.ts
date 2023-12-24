@@ -1,10 +1,12 @@
 import { Result } from "../../common/result.interface";
 import { IValidator, NonNullable } from "../../primitive/validator.interface";
 import { Stack } from "../../helpers/stack";
-import { ValidationError } from "../../errors/validation.error";
-import { ValidatorTemplate } from "../../common/validator-template";
+import { ValidationError } from "../../common/errors/validation.error";
+import { ValidatorTemplate } from "../../common/validator.template";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
+import { errorContext } from "../../common/errors";
 
-type CustomValidatorFn<T> = (value: unknown) =>  any;
+type CustomValidatorFn<T> = (value: unknown, errCtx?: ValidationErrorContext) =>  any;
 
 type PropertyValidator<T> = IValidator<T> | CustomValidatorFn<T>;
 
@@ -71,7 +73,12 @@ class ObjectValidator<T extends object> extends ValidatorTemplate<T> implements 
                 const propVal = (value as {[key: string]: any})[expectedKey];
 
                 // Check if this an IValidator or custom function by user defined
-                const resultPerKey: Result<T> | ValidationError[] = isIValidator(validator) ? validator.check(propVal, options, this.errorPath) : validator(propVal);
+                const resultPerKey: Result<T> | ValidationError[] | ValidationError = isIValidator(validator) ? validator.check(propVal, options, this.errorPath) : validator(propVal, errorContext);
+
+                // If this is a custom validator function by user defined, and stopOnFailure set to true
+                if (resultPerKey instanceof ValidationError && !options.stopOnFailure) {
+                    this.results.push(resultPerKey);
+                } else if (resultPerKey instanceof ValidationError) throw resultPerKey;
                 
                 // Check if resultPerKey is Array of ValidationError instance
                 if (Array.isArray(resultPerKey) && resultPerKey.every((el) => el instanceof ValidationError)) { 
@@ -80,14 +87,14 @@ class ObjectValidator<T extends object> extends ValidatorTemplate<T> implements 
                         return el.setPath(currentPath);
                     })
                     this.results.push(...updatedErrors);
-                } else {
+                } else if (!(resultPerKey instanceof ValidationError)) {
                     this.results.push(resultPerKey as Result<T>);
                 }
-
                 this.errorPath?.pop();
+
             }
         }   
-        return this.results;
+        return this.results.flat();
     }
 
     shape(newObjectSchema: ObjectValidatorSchema<any>) {

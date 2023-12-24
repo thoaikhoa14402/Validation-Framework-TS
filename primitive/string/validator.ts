@@ -7,9 +7,11 @@ import { IStringRule } from "./rules/rule.interface";
 import { IValidator, NonNullable } from "../validator.interface";
 import { Result } from "../../common/result.interface";
 import CustomRule from "./rules/custom.rule";
-import { ValidationErrorContext } from "../../errors/error.ctx";
-import { ValidationError } from "../../errors/validation.error";
-import { ValidatorTemplate } from "../../common/validator-template";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
+import { ValidationError } from "../../common/errors/validation.error";
+import { ValidatorTemplate } from "../../common/validator.template";
+import UppercaseRule from "./rules/upperCase.rule";
+import { SpecialCharacter } from "./rules";
 
 class StringValidator implements IValidator<string> {
     private rules: IStringRule[] = []; // string validation strategies
@@ -100,6 +102,16 @@ class StringValidatorBuilder extends ValidatorTemplate<string> {
         return this.validator.check(value, options);
     }
 
+    upperCase(errMsg?: string) {
+        this.validator.addRule(new UppercaseRule(errMsg));
+        return this;
+    }
+
+    specialCharacter(errMsg?: string) {
+        this.validator.addRule(new SpecialCharacter(errMsg));
+        return this;
+    }
+    
 }
 
 export default () => new StringValidatorBuilder();

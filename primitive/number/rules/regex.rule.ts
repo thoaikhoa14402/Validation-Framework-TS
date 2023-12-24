@@ -1,6 +1,6 @@
 import { INumberRule } from "./rule.interface";
-import errorContext from "../../../errors/error.ctx";
-import { ValidationError } from "../../../errors/validation.error";
+import errorContext from "../../../common/errors/error.ctx";
+import { ValidationError } from "../../../common/errors/validation.error";
 
 // used for an arbitrary regex to match the value 
 export default class RegexMatchingRule implements INumberRule { 
