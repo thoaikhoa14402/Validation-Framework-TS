@@ -1,2 +1,2 @@
-export type PrimitiveType = string | number | boolean | null | undefined;
-export type NonPrimitiveType = object | []
+export type PrimitiveType = string | number | boolean | null | undefined | any; 
+export type NonPrimitiveType = object | [] | any

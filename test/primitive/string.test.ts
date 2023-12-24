@@ -4,6 +4,7 @@ import { ValidatorTemplate } from "../../common/validator.template";
 // ===================== CHAIN VALIDATION =====================
 const chainValidator = VFT.string().notEmpty().minLength(5, 'must be at least 5 characters long').email('must be a valid email address');
 
+VFT.custom()
 try {
     const result1 = chainValidator.validate('nguyenthoaidangkhoa@gmail.com'); // expected true
     // const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
