@@ -1,12 +1,53 @@
 import VFT from "../..";
 
-// ===================== TRUE FALSE VALIDATION =====================
-const maxValidator = VFT.boolean().truthy();
-try {
-  const result1 = maxValidator.validate(1, {stopOnFailure: false}); // expected true
+// ===================== TRUE FALSE VALIDATION BY BOOLEAN=====================
+// const boolValidator = VFT.boolean().truthy();
+// try {
+//   const result1 = boolValidator.validate(true, {stopOnFailure: false}); // expected true
+//   const result1 = boolValidator.validate(1, {stopOnFailure: false}); // expected false
+//   console.log("Result of max validator: ", result1);
+// } catch (err: any) {
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
+// }
 
+
+// ===================== TRUE FALSE VALIDATION BY FUNCTION=====================
+// const boolValidator = VFT.boolean().truthy();
+
+// const isPrime: (num: number) => boolean = num => {
+//   for (let i: number = 2, s = Math.sqrt(num); i <= s; i++) {
+//     if (num % i === 0) return false;
+//   }
+//   return num > 1;
+// }
+
+// const incrementNumber: (num: number) => number = num =>{
+//   return num++;
+// }
+
+// try {
+//   const result1 = boolValidator.validate(isPrime(7), {stopOnFailure: false}); // expected true
+//   // const result1 = boolValidator.validate(incrementNumber(7), { stopOnFailure: false }); // expected false
+//   console.log("Result of max validator: ", result1);
+// } catch (err: any) {
+//   console.log('Error messages: ', err.message);
+//   console.log('Validation Errors: ', err.validationErrors);
+// }
+
+// ===================== TRUE FALSE VALIDATION BY TERNARY OPERATOR =====================
+const boolValidator = VFT.boolean().truthy();
+
+const num: number = 0;
+
+try {
+  //check whether num is equal to 0
+  const result1 = boolValidator.validate(num === 0 ? true : false, {stopOnFailure: false}); // expected true
+  // const result1 = boolValidator.validate(num === 0, {stopOnFailure: false}); // expected true
+  // const result1 = boolValidator.validate(num === 0 ? "true" : "false", { stopOnFailure: false }); // expected false
   console.log("Result of max validator: ", result1);
 } catch (err: any) {
-   console.log('Error messages: ', err.message);
-   console.log('Validation Errors: ', err.validationErrors);
+  console.log('Error messages: ', err.message);
+  console.log('Validation Errors: ', err.validationErrors);
 }
+

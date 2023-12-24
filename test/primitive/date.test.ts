@@ -1,18 +1,17 @@
 import VFT from "../..";
 import { ValidatorTemplate } from "../../common/validator.template";
 
-// ===================== CHAIN VALIDATION =====================
-// const dateValidator = VFT.date().isValid();
 
 // ===================== CHECK DATE IS VALID FORMAT YYYY/MM/DD =====================
-// try {
-//     const result1 = dateValidator.validate('2024/04/28'); // expected true
-//     // const result2 = dateValidator.validate('2024/04/45', {stopOnFailure: false}); // expected error
-//     console.log('Result of validation: ', result1);
-// } catch (err: any) {
-//     console.log('Error messages: ', err.message);
-//     console.log('Validation Errors: ', err.validationErrors);
-// }
+const dateValidator = VFT.date().isValid();
+try {
+    const result1 = dateValidator.validate('2024/04/28'); // expected true
+    // const result2 = dateValidator.validate('2024/04/45', {stopOnFailure: false}); // expected error
+    console.log('Result of validation: ', result1);
+} catch (err: any) {
+    console.log('Error messages: ', err.message);
+    console.log('Validation Errors: ', err.validationErrors);
+}
 
 // ===================== CHECK DATE IS VALID FORMAT MM/DD/YYYY=====================
 // const dateValidator = VFT.date().isValid();
@@ -59,15 +58,15 @@ import { ValidatorTemplate } from "../../common/validator.template";
 // }
 
 // ===================== CHECK DATE IS IN DECEMBER =====================
-const dateValidator = VFT.date().isValid().later("12/01/2023").earlier("12/31/2023");
-try {
-    // const result1 = dateValidator.validate('12/23/2023'); // expected true
-    const result2 = dateValidator.validate('01/04/2024', {stopOnFailure: false}); // expected error
-    // console.log('Result of validation: ', result1);
-} catch (err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
-}
+// const dateValidator = VFT.date().isValid().later("12/01/2023").earlier("12/31/2023");
+// try {
+//     const result1 = dateValidator.validate('12/23/2023'); // expected true
+//     const result2 = dateValidator.validate('01/04/2024', {stopOnFailure: false}); // expected error
+//     console.log('Result of validation: ', result1);
+// } catch (err: any) {
+//     console.log('Error messages: ', err.message);
+//     console.log('Validation Errors: ', err.validationErrors);
+// }
 
 
 
