@@ -1,6 +1,6 @@
 import VFT from "../..";
 import { ValidatorTemplate } from "../../common/validator.template";
-
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== CHECK DATE IS VALID FORMAT YYYY/MM/DD =====================
 // const dateValidator = VFT.date().isValid();
@@ -92,18 +92,29 @@ import { ValidatorTemplate } from "../../common/validator.template";
 // }
 
 // ===================== MIXED VALIDATION TRUE =====================
-const mixedValidator = VFT.date()
-    .addMethod("checkValid", (x: string) => !isNaN(new Date(x).getTime()))
+const mixedValidator = VFT.date().addMethod(
+  "checkValid",
+  (x: string, errCtx: ValidationErrorContext) => {
+    return !isNaN(new Date(x).getTime())
+      ? true
+      : errCtx!.createError({
+          message: "Input is invalid",
+          value: x,
+        });
+  }
+);
 
-const chainValidator = mixedValidator.checkValid().later("12/01/2023").earlier("12/31/2023");
+const chainValidator = mixedValidator
+  .checkValid()
+  .later("12/01/2023")
+  .earlier("12/31/2023");
 
 try {
-    // const result1 = chainValidator.validate("12/23/2023", { stopOnFailure: false });//Expected true
-    // const result1 = chainValidator.validate("01/04/2024", { stopOnFailure: false });//Expected false
-    const result1 = chainValidator.validate("abcdefgh", { stopOnFailure: false });//Expected false
-    console.log("Result of mixed validator: ", result1);
+  // const result1 = chainValidator.validate("12/23/2023", { stopOnFailure: false });//Expected true
+  // const result1 = chainValidator.validate("01/04/2024", { stopOnFailure: false });//Expected false
+  const result1 = chainValidator.validate("abcdefgh", { stopOnFailure: false }); //Expected false
+  console.log("Result of mixed validator: ", result1);
 } catch (err: any) {
-    console.log("Error messages: ", err.message);
-    console.log("Validation Errors: ", err.validationErrors);
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
 }
-
