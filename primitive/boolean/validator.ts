@@ -9,7 +9,7 @@ import { Stack } from "../../helpers/stack";
 import TruthyRule from "./rules/truthy.rule";
 import FalsyRule from "./rules/falsy.rule";
 import TruthyFalsyChecker from "../../helpers/TruthyFalsyChecker";
-import MixedRule from "./rules/mixed.rule";
+import CustomRule from "./rules/custom.rule";
 
 class BooleanValidator implements IValidator<boolean> {
   private rules: IBooleanRule[] = [];
@@ -95,10 +95,13 @@ class BooleanValidatorBuilder extends ValidatorTemplate<boolean> {
 
   addMethod(
     name: string,
-    implementation: (value: any) => boolean | ValidationError
+    callback: (
+      value: boolean,
+      errCtx?: ValidationErrorContext
+    ) => boolean | ValidationError
   ) {
     this[name] = () => {
-      this.validator.addRule(new MixedRule(implementation));
+      this.validator.addRule(new CustomRule(callback));
       return this;
     };
     return this;

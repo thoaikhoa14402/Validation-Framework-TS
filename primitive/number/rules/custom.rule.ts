@@ -13,5 +13,4 @@ export default class CustomRule implements INumberRule {
     validate(value: number) {
         return this.callback(value, errorCtx);
     }
-
 }

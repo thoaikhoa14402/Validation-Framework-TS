@@ -16,7 +16,6 @@ import {
 } from "./rules";
 import CustomRule from "./rules/custom.rule";
 import { ValidatorTemplate } from "../../common/validator.template";
-import MixedRule from "./rules/mixed.rule";
 
 class NumberValidator implements IValidator<number> {
   private rules: INumberRule[] = []; // string validation strategies
@@ -125,11 +124,13 @@ class NumberValidatorBuilder extends ValidatorTemplate<number> {
 
   addMethod(
     name: string,
-    implementation: (value: any) => boolean | ValidationError,
-    errMsg?: string
+    callback: (
+      value: number,
+      errCtx?: ValidationErrorContext
+    ) => boolean | ValidationError
   ) {
     this[name] = () => {
-      this.validator.addRule(new MixedRule(implementation, errMsg));
+      this.validator.addRule(new CustomRule(callback));
       return this;
     };
     return this;

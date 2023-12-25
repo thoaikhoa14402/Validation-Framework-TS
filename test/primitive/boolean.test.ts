@@ -1,4 +1,5 @@
 import VFT from "../..";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== TRUE FALSE VALIDATION BY BOOLEAN=====================
 // const boolValidator = VFT.boolean().truthy();
@@ -51,7 +52,17 @@ import VFT from "../..";
 // }
 
 // ===================== MIXED VALIDATION =====================
-const b = VFT.boolean().addMethod("isCheck", (x: boolean) => x);
+const b = VFT.boolean().addMethod(
+  "isCheck",
+  (value: boolean, errCtx: ValidationErrorContext) => {
+    return value
+      ? true
+      : errCtx!.createError({
+          message: "The value is false",
+          value: value.toString(),
+        });
+  }
+);
 
 const boolValidator = b.isCheck();
 

@@ -1,4 +1,5 @@
 import VFT from "../..";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== MAX LENGTH VALIDATION =====================
 // const maxValidator = VFT.number().integer().min(5).negative();
@@ -115,17 +116,30 @@ import VFT from "../..";
 //   console.log('Validation Errors: ', err.validationErrors);
 // }
 
-// ===================== MIXED VALIDATION TRUE =====================
-// const mixedValidator = VFT.number()
-//   .addMethod("isGreater", (x: number) => x >= 3, "no greater")
-//   .addMethod("isLess", (x: number) => x < 5, "no less");
+// ===================== ADDMETHOD VALIDATION TRUE =====================
+const mixedValidator = VFT.number()
+  .addMethod("isGreater", (value: number, errCtx: ValidationErrorContext) => {
+    return value > 3
+      ? true
+      : errCtx!.createError({
+          message: "The number is not greater than the allowed value.",
+          value: value,
+        });
+  })
+  .addMethod("isLess", (value: number, errCtx: ValidationErrorContext) => {
+    return value < 5
+      ? true
+      : errCtx!.createError({
+          message: "The number is not less than the allowed value.",
+          value: value,
+        });
+  });
 
-// const chainValidator = mixedValidator.isGreater().isLess().negative();
-
-// try {
-//   const result1 = chainValidator.validate(1, { stopOnFailure: false });
-//   console.log("Result of mixed validator: ", result1);
-// } catch (err: any) {
-//   console.log("Error messages: ", err.message);
-//   console.log("Validation Errors: ", err.validationErrors);
-// }
+const chainValidator = mixedValidator.isGreater().isLess().negative();
+try {
+  const result1 = chainValidator.validate(2, { stopOnFailure: false });
+  console.log("Result of mixed validator: ", result1);
+} catch (err: any) {
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
+}
