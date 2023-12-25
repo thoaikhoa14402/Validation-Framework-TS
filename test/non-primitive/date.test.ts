@@ -69,15 +69,16 @@ import { ValidatorTemplate } from "../../common/validator.template";
 // }
 
 //===================== CHECK DATE IS IN DECEMBER =====================
-const dateValidator = VFT.date().isValid().later("12/01/2023").earlier("12/31/2023");
-try {
-    // const result1 = dateValidator.validate('12/23/2023'); // expected true
-    const result2 = dateValidator.validate('01/04/2024', {stopOnFailure: false}); // expected error
-    // console.log('Result of validation: ', result1);
-} catch (err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
-}
+// const dateValidator = VFT.date().isValid().later("12/01/2023").earlier("12/31/2023");
+
+// try {
+//     // const result1 = dateValidator.validate('12/23/2023'); // expected true
+//     const result2 = dateValidator.validate('01/04/2024', {stopOnFailure: false}); // expected error
+//     // console.log('Result of validation: ', result1);
+// } catch (err: any) {
+//     console.log('Error messages: ', err.message);
+//     console.log('Validation Errors: ', err.validationErrors);
+// }
 
 // ===================== CHECK DATE IS IN LEAP YEAR =====================
 // const dateValidator2 = VFT.date().isValid().leapYear();
@@ -89,3 +90,20 @@ try {
 //     console.log('Error messages: ', err.message);
 //     console.log('Validation Errors: ', err.validationErrors);
 // }
+
+// ===================== MIXED VALIDATION TRUE =====================
+const mixedValidator = VFT.date()
+    .addMethod("checkValid", (x: string) => !isNaN(new Date(x).getTime()))
+
+const chainValidator = mixedValidator.checkValid().later("12/01/2023").earlier("12/31/2023");
+
+try {
+    // const result1 = chainValidator.validate("12/23/2023", { stopOnFailure: false });//Expected true
+    // const result1 = chainValidator.validate("01/04/2024", { stopOnFailure: false });//Expected false
+    const result1 = chainValidator.validate("abcdefgh", { stopOnFailure: false });//Expected false
+    console.log("Result of mixed validator: ", result1);
+} catch (err: any) {
+    console.log("Error messages: ", err.message);
+    console.log("Validation Errors: ", err.validationErrors);
+}
+

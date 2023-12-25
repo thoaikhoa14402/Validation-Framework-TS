@@ -3,6 +3,7 @@ import MinLengthRule from "./rules/minLength.rule";
 import MaxLengthRule from "./rules/maxLength.rule";
 import EmailRule from "./rules/email.rule";
 import RegexMatchingRule from "./rules/regex.rule";
+import MixedRule from "./rules/mixed.rule";
 import { IStringRule } from "./rules/rule.interface";
 import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Result } from "../../common/result.interface";
@@ -53,6 +54,7 @@ class StringValidator implements IValidator<string> {
 
 class StringValidatorBuilder extends ValidatorTemplate<string> {
     private validator: StringValidator;
+    [key: string]: any;
 
     constructor() {
         super();
@@ -111,6 +113,18 @@ class StringValidatorBuilder extends ValidatorTemplate<string> {
         this.validator.addRule(new SpecialCharacter(errMsg));
         return this;
     }
+
+    addMethod(
+        name: string,
+        implementation: (value: any) => boolean | ValidationError,
+        errMsg?: string
+      ) {
+        this[name] = () => {
+          this.validator.addRule(new MixedRule(implementation, errMsg));
+          return this;
+        };
+        return this;
+      }
     
 }
 

@@ -5,3 +5,4 @@ export { default as EmailRule } from './email.rule';
 export {default as MatchingRule} from './regex.rule';
 export {default as SpecialCharacter} from './specialCharacter.rule';
 export {default as UppercaseRule} from './upperCase.rule';
+export {default as MixedRule} from './mixed.rule';

@@ -2,6 +2,7 @@ import IsValidRule from "./rules/valid.rule";
 import EqualRule from "./rules/equal.rule";
 import LaterRule from "./rules/later.rule";
 import EarlierRule from "./rules/earlier.rule";
+import MixedRule from "./rules/mixed.rule";
 import { IDateRule } from "./rules/rule.interface";
 import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Result } from "../../common/result.interface";
@@ -28,7 +29,7 @@ class DateValidator implements IValidator<string> {
     check(value: string, options = { stopOnFailure: true }) {
         const ok = (value: string): Result<string> => ({ ok: true, value: value });
         const errList: ValidationError[] = [];
-        
+
         for (let rule of this.rules) {
             const result = rule.validate(value);
             if (result instanceof ValidationError) {
@@ -40,17 +41,18 @@ class DateValidator implements IValidator<string> {
         }
 
         if (errList.length) return errList;
-        
+
         return ok(value);
     }
 
     addRule(rule: IDateRule) {
         this.rules.push(rule);
     }
-}   
+}
 
 class DateValidatorBuilder extends ValidatorTemplate<string> {
     private validator: DateValidator;
+    [key: string]: any;
 
     constructor() {
         super();
@@ -92,6 +94,18 @@ class DateValidatorBuilder extends ValidatorTemplate<string> {
 
     leapYear(errMsg?: string) {
         this.validator.addRule(new LeapYearRule(errMsg));
+        return this;
+    }
+
+    addMethod(
+        name: string,
+        implementation: (value: any) => boolean | ValidationError,
+        errMsg?: string
+    ) {
+        this[name] = () => {
+            this.validator.addRule(new MixedRule(implementation, errMsg));
+            return this;
+        };
         return this;
     }
 

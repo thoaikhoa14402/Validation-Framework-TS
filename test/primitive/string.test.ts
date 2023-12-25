@@ -2,17 +2,17 @@ import VFT from "../..";
 import { ValidatorTemplate } from "../../common/validator.template";
 
 // ===================== CHAIN VALIDATION =====================
-const chainValidator = VFT.string().notEmpty().minLength(5, 'must be at least 5 characters long').email('must be a valid email address');
+// const chainValidator = VFT.string().notEmpty().minLength(5, 'must be at least 5 characters long').email('must be a valid email address');
 
-VFT.custom()
-try {
-    const result1 = chainValidator.validate('nguyenthoaidangkhoa@gmail.com'); // expected true
-    // const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
-    console.log('Result of validation: ', result1);
-} catch (err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
-}
+// VFT.custom()
+// try {
+//     const result1 = chainValidator.validate('nguyenthoaidangkhoa@gmail.com'); // expected true
+//     // const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
+//     console.log('Result of validation: ', result1);
+// } catch (err: any) {
+//     console.log('Error messages: ', err.message);
+//     console.log('Validation Errors: ', err.validationErrors);
+// }
 
 
 // ===================== MAX LENGTH VALIDATION =====================
@@ -23,8 +23,8 @@ try {
 //     const result1 = maxLengthValidator.validate('123456'); // expected error
 //     console.log('Result of max length validation: ', result1);
 // } catch (err: any) {
-    // console.log('Error messages: ', err.message);
-    // console.log('Validation Errors: ', err.validationErrors);
+// console.log('Error messages: ', err.message);
+// console.log('Validation Errors: ', err.validationErrors);
 // }
 
 
@@ -55,7 +55,7 @@ try {
 
 
 // ===================== NOT EMPTY VALIDATION =====================
-const notEmptyValidator = VFT.string().notEmpty('must be not empty');
+// const notEmptyValidator = VFT.string().notEmpty('must be not empty');
 
 // try {
 //     // const result3 = notEmptyValidator.validate('20127043@student.hcmus.edu.vn'); // expected true
@@ -110,14 +110,14 @@ const notEmptyValidator = VFT.string().notEmpty('must be not empty');
 // }
 
 //===================== SPECIAL CHARACTER CASE =====================
-const upperCaseValidator = VFT.string().upperCase().specialCharacter();
-try {
-    const customString = upperCaseValidator.validate('abc#');
-    console.log("Result of custom validator: ", customString);
-} catch(err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
-}
+// const upperCaseValidator = VFT.string().upperCase().specialCharacter();
+// try {
+//     const customString = upperCaseValidator.validate('abc#');
+//     console.log("Result of custom validator: ", customString);
+// } catch(err: any) {
+//     console.log('Error messages: ', err.message);
+//     console.log('Validation Errors: ', err.validationErrors);
+// }
 
 // ===================== SPECIAL CASE =====================
 // try {
@@ -127,3 +127,21 @@ try {
 //     console.log('Error messages: ', err.message);
 //     console.log('Validation Errors: ', err.validationErrors);
 // }
+
+// ===================== MIXED VALIDATION TRUE =====================
+const mixedValidator = VFT.string()
+    .addMethod("beginWithA", (x: string) => x[0] === "a")
+    .addMethod("endWithB", (x: string) => x[x.length - 1] === "b")
+
+const chainValidator = mixedValidator.beginWithA().endWithB().maxLength(5, 'must be at most 5 characters long');
+
+try {
+    const result1 = chainValidator.validate("acdeb", { stopOnFailure: false });//Expected true
+    // const result1 = chainValidator.validate("acccccb", { stopOnFailure: false });//Expected false
+    // const result1 = chainValidator.validate("abcdefgh", { stopOnFailure: false });//Expected false
+    console.log("Result of mixed validator: ", result1);
+} catch (err: any) {
+    console.log("Error messages: ", err.message);
+    console.log("Validation Errors: ", err.validationErrors);
+}
+
