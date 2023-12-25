@@ -4,3 +4,4 @@ export {default as Later} from './later.rule';
 export {default as Earlier} from './earlier.rule';
 export {default as LeapYearRule} from './leapYear.rule';
 export {default as MixedRule} from './mixed.rule';
+export {default as CustomRule} from './custom.rule';

@@ -116,11 +116,13 @@ class StringValidatorBuilder extends ValidatorTemplate<string> {
 
     addMethod(
         name: string,
-        implementation: (value: any) => boolean | ValidationError,
-        errMsg?: string
+        callback: (
+          value: string,
+          errCtx?: ValidationErrorContext
+        ) => boolean | ValidationError
       ) {
         this[name] = () => {
-          this.validator.addRule(new MixedRule(implementation, errMsg));
+          this.validator.addRule(new CustomRule(callback));
           return this;
         };
         return this;
