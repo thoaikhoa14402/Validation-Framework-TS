@@ -1,9 +1,10 @@
-import { IValidator } from "../../common/validator.interface";
-import { Result } from "../../common/result.interface";
-import { ValidationError } from "../../common/errors/validation.error";
-import { ValidatorTemplate } from "../../common/validator.template";
+import { IValidator } from "../common/validator.interface";
+import { Result } from "../common/result.interface";
+import { ValidationError } from "../common/errors/validation.error";
+import { ValidatorTemplate } from "../common/validator.template";
 import { IMixedRule } from "./rule.interface";
 import MixedRule from "./rule";
+import { ValidationErrorContext } from "../common/errors/error.ctx";
 
 class MixedValidator<T extends any> implements IValidator<T> {
   private rules: IMixedRule[] = []; // string validation strategies
@@ -42,10 +43,6 @@ class MixedValidator<T extends any> implements IValidator<T> {
   }
 }
 
-interface AnyMethods {
-  [key: string]: (...args: any[]) => any
-}
-
 class MixedValidatorBuilder<T extends any> extends ValidatorTemplate<T> {
   private validator: MixedValidator<T>;
   [key: string]: any;
@@ -66,22 +63,16 @@ class MixedValidatorBuilder<T extends any> extends ValidatorTemplate<T> {
 
   addMethod(
     name: string,
-    implementation: (value: any) => boolean | ValidationError
+    callback: (
+      value: any,
+      errCtx?: ValidationErrorContext
+    ) => boolean | ValidationError
   ) {
-    // Object.assign(this, {
-    //   [name]: () => {
-    //     this.validator.addRule(new MixedRule(implementation));
-    //     return this;
-    //   }
-    // })
     this[name] = () => {
-      this.validator.addRule(new MixedRule(implementation));
+      this.validator.addRule(new MixedRule(callback));
       return this;
     }
     return this;
-    // } else {
-    //   console.error(`Method ${name} already exists in ${type.name}`);
-    // }
   }
 
   check(value: unknown, options = { stopOnFailure: true }) {
