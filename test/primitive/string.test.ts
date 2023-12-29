@@ -3,17 +3,15 @@ import { ValidatorTemplate } from "../../common/validator.template";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== CHAIN VALIDATION =====================
-// const chainValidator = VFT.string().notEmpty().minLength(5, 'must be at least 5 characters long').email('must be a valid email address');
-
-// VFT.custom()
-// try {
-//     const result1 = chainValidator.validate('nguyenthoaidangkhoa@gmail.com'); // expected true
-//     // const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
-//     console.log('Result of validation: ', result1);
-// } catch (err: any) {
-//     console.log('Error messages: ', err.message);
-//     console.log('Validation Errors: ', err.validationErrors);
-// }
+const chainValidator = VFT.string().notEmpty().minLength(5, 'must be at least 5 characters long').email('must be a valid email address');
+try {
+    const result1 = chainValidator.validate('nguyenthoaidangkhoa@gmail.com'); // expected true
+    // const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
+    console.log('Result of validation: ', result1);
+} catch (err: any) {
+    console.log('Error messages: ', err.message);
+    console.log('Validation Errors: ', err.validationErrors);
+}
 
 // ===================== MAX LENGTH VALIDATION =====================
 // const maxLengthValidator = VFT.string().maxLength(5, 'must be at most 5 characters long');
@@ -124,36 +122,36 @@ import { ValidationErrorContext } from "../../common/errors/error.ctx";
 // }
 
 // ===================== MIXED VALIDATION TRUE =====================
-const mixedValidator = VFT.string()
-  .addMethod("beginWithA", (x: string, errCtx: ValidationErrorContext) => {
-    return x[0] === "a"
-      ? true
-      : errCtx!.createError({
-          message: "The string does not begin with 'a' character",
-          value: x,
-        });
-  })
-  .addMethod("endWithB", (x: string, errCtx: ValidationErrorContext) => {
-    return x[x.length-1] === "b"
-      ? true
-      : errCtx!.createError({
-          message: "The string does not end with 'b' character",
-          value: x,
-        });
-  })
+// const mixedValidator = VFT.string()
+//   .addMethod("beginWithA", (x: string, errCtx: ValidationErrorContext) => {
+//     return x[0] === "a"
+//       ? true
+//       : errCtx!.createError({
+//           message: "The string does not begin with 'a' character",
+//           value: x,
+//         });
+//   })
+//   .addMethod("endWithB", (x: string, errCtx: ValidationErrorContext) => {
+//     return x[x.length-1] === "b"
+//       ? true
+//       : errCtx!.createError({
+//           message: "The string does not end with 'b' character",
+//           value: x,
+//         });
+//   })
 
-const chainValidator = mixedValidator
-  .beginWithA()
-  .endWithB()
-  .maxLength(5, "must be at most 5 characters long");
+// const chainValidator = mixedValidator
+//   .beginWithA()
+//   .endWithB()
+//   .maxLength(5, "must be at most 5 characters long");
 
-try {
-//   const result1 = chainValidator.validate("acdeb", { stopOnFailure: false }); //Expected true
-//   const result1 = chainValidator.validate("acccccb", { stopOnFailure: false });//Expected false
-//   const result1 = chainValidator.validate("abcdh", { stopOnFailure: false });//Expected false
-  const result1 = chainValidator.validate("bbcda", { stopOnFailure: false });//Expected false
-  console.log("Result of mixed validator: ", result1);
-} catch (err: any) {
-  console.log("Error messages: ", err.message);
-  console.log("Validation Errors: ", err.validationErrors);
-}
+// try {
+// //   const result1 = chainValidator.validate("acdeb", { stopOnFailure: false }); //Expected true
+// //   const result1 = chainValidator.validate("acccccb", { stopOnFailure: false });//Expected false
+// //   const result1 = chainValidator.validate("abcdh", { stopOnFailure: false });//Expected false
+//   const result1 = chainValidator.validate("bbcda", { stopOnFailure: false });//Expected false
+//   console.log("Result of mixed validator: ", result1);
+// } catch (err: any) {
+//   console.log("Error messages: ", err.message);
+//   console.log("Validation Errors: ", err.validationErrors);
+// }
