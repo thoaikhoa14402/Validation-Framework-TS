@@ -3,14 +3,18 @@ import { ValidatorTemplate } from "../../common/validator.template";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== CHAIN VALIDATION =====================
-const chainValidator = VFT.string().notEmpty().minLength(5, 'must be at least 5 characters long').email('must be a valid email address');
+const chainValidator = VFT.string()
+  .notEmpty()
+  .minLength(5, "must be at least 5 characters long")
+  .email("must be a valid email address");
+
 try {
-    // const result1 = chainValidator.validate('nguyenthoaidangkhoa@gmail.com'); // expected true
-    const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
-    console.log('Result of validation: ', result1);
+  const result1 = chainValidator.validate("nguyenthoaidangkhoa@gmail.com"); // expected true
+  // const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
+  console.log("Result of validation: ", result1);
 } catch (err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
 }
 
 // ===================== MAX LENGTH VALIDATION =====================

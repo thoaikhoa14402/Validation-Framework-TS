@@ -3,7 +3,6 @@ import MinLengthRule from "./rules/minLength.rule";
 import MaxLengthRule from "./rules/maxLength.rule";
 import EmailRule from "./rules/email.rule";
 import RegexMatchingRule from "./rules/regex.rule";
-import MixedRule from "./rules/mixed.rule";
 import { IStringRule } from "./rules/rule.interface";
 import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Result } from "../../common/result.interface";

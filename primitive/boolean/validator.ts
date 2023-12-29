@@ -3,12 +3,9 @@ import { ValidationError } from "../../common/errors/validation.error";
 import { IBooleanRule } from "./rules/rule.interface";
 import { IValidator, NonNullable } from "../../common/validator.interface";
 import { Result } from "../../common/result.interface";
-// import CustomRule from "./rules/custom.rule";
 import { ValidatorTemplate } from "../../common/validator.template";
-import { Stack } from "../../helpers/stack";
 import TruthyRule from "./rules/truthy.rule";
 import FalsyRule from "./rules/falsy.rule";
-import TruthyFalsyChecker from "../../helpers/TruthyFalsyChecker";
 import CustomRule from "./rules/custom.rule";
 import { IValidatorBuilder } from "../../common/validator.builder.interface";
 
