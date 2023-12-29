@@ -4,16 +4,16 @@ import { IStringRule } from "./rule.interface";
 
 export default class SpecialCharacterRule implements IStringRule {
   static ruleName = 'string.rule.specialCharacter';
-  static errorMessage = 'The string does not contain special characters';
+  errorMessage: string = 'The string does not contain special characters';
 
   constructor(errorMsg?: string) {
-    if (errorMsg) SpecialCharacterRule.errorMessage = errorMsg;
+    if (errorMsg) this.errorMessage = errorMsg;
   }
 
   validate(value: string): boolean | ValidationError {
     if (typeof value !== 'string' || !/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
       return errorContext.createError({
-        message: SpecialCharacterRule.errorMessage,
+        message: this.errorMessage,
         type: SpecialCharacterRule.ruleName,
         path: '',
         value: value,

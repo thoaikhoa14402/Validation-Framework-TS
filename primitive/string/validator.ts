@@ -13,6 +13,7 @@ import { ValidationError } from "../../common/errors/validation.error";
 import { ValidatorTemplate } from "../../common/validator.template";
 import UppercaseRule from "./rules/upperCase.rule";
 import { SpecialCharacter } from "./rules";
+import { IValidatorBuilder } from "../../common/validator.builder.interface";
 
 class StringValidator implements IValidator<string> {
     private rules: IStringRule[] = []; // string validation strategies
@@ -52,7 +53,7 @@ class StringValidator implements IValidator<string> {
     }
 }   
 
-class StringValidatorBuilder extends ValidatorTemplate<string> {
+class StringValidatorBuilder extends ValidatorTemplate<string> implements IValidatorBuilder<string> {
     private validator: StringValidator;
     [key: string]: any;
 

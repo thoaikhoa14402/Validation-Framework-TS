@@ -4,18 +4,18 @@ import { INumberRule } from "./rule.interface";
 
 export default class MaxRule implements INumberRule {
   static ruleName = 'number.rule.max';
-  static errorMessage = 'The number is greater than maximum'
+  errorMessage: string = 'The number is greater than maximum'
   private max: number;
 
   constructor(max: number, errorMsg?: string) {
     this.max = max;
-    if (errorMsg) MaxRule.errorMessage = errorMsg;
+    if (errorMsg) this.errorMessage = errorMsg;
   }
 
   validate(value: number): boolean | ValidationError {
     if(!(value <= this.max)) {
       return errorContext.createError({
-        message: MaxRule.errorMessage,
+        message: this.errorMessage,
         type: MaxRule.ruleName,
         path: '',
         value: value,

@@ -4,10 +4,10 @@ import { IDateRule } from "./rule.interface";
 
 export default class LeapYearRule implements IDateRule {
   static ruleName = 'date.rule.leapYear';
-  static errorMessage = 'The year is not a leap year';
+ errorMessage: string = 'The year is not a leap year';
 
   constructor(errorMsg?: string) {
-    if (errorMsg) LeapYearRule.errorMessage = errorMsg;
+    if (errorMsg) this.errorMessage = errorMsg;
   }
 
   private isLeapYear(year: number): boolean {
@@ -24,7 +24,7 @@ export default class LeapYearRule implements IDateRule {
 
     if (!this.isLeapYear(year)) {
       return errorContext.createError({
-        message: LeapYearRule.errorMessage,
+        message: this.errorMessage,
         type: LeapYearRule.ruleName,
         path: '',
         value: value,

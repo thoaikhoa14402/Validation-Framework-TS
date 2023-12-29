@@ -6,17 +6,17 @@ import { ValidationError } from "../../../common/errors/validation.error";
 export default class RegexMatchingRule implements IStringRule { 
     private regex: RegExp;
     static ruleName = "string.rule.regex";
-    static errorMessage = "The string does not match the regex pattern"
+    errorMessage: string = "The string does not match the regex pattern"
 
     constructor(regex: RegExp, errMsg?: string) {
         this.regex = regex;
-        if (errMsg) RegexMatchingRule.errorMessage = errMsg;
+        if (errMsg) this.errorMessage = errMsg;
     }
 
     validate(value: string, errorMsg?: string): boolean | ValidationError {
         if (!this.regex.test(value)) {
           return errorContext.createError({
-            message:  errorMsg ?? RegexMatchingRule.errorMessage,
+            message:  errorMsg ?? this.errorMessage,
             type: RegexMatchingRule.ruleName,
             path: '',
             value: value,

@@ -7,17 +7,17 @@ import { IDateRule } from "./rule.interface";
 export default class MixedRule implements IDateRule {
   private callback: (value: any) => boolean | ValidationError;
   static ruleName = "string.rule.mixed";
-  static errorMessage = "The validation is error";
+ errorMessage: string = "The validation is error";
 
   constructor(callback: (value: any) => boolean | ValidationError, errorMsg?: string) {
     this.callback = callback;
-    if(errorMsg) MixedRule.errorMessage = errorMsg
+    if(errorMsg) this.errorMessage = errorMsg
   }
 
   validate(value: any) {
     if (!this.callback(value)) {
       return errorContext.createError({
-        message: MixedRule.errorMessage,
+        message: this.errorMessage,
         type: MixedRule.ruleName,
         path: "",
         value: value,

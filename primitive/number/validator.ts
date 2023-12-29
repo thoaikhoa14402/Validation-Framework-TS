@@ -16,6 +16,7 @@ import {
 } from "./rules";
 import CustomRule from "./rules/custom.rule";
 import { ValidatorTemplate } from "../../common/validator.template";
+import { IValidatorBuilder } from "../../common/validator.builder.interface";
 
 class NumberValidator implements IValidator<number> {
   private rules: INumberRule[] = []; // string validation strategies
@@ -55,7 +56,7 @@ class NumberValidator implements IValidator<number> {
   }
 }
 
-class NumberValidatorBuilder extends ValidatorTemplate<number> {
+class NumberValidatorBuilder extends ValidatorTemplate<number> implements IValidatorBuilder<number> {
   private validator: NumberValidator;
   [key: string]: any;
 

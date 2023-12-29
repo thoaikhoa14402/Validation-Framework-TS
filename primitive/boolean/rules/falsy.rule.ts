@@ -4,16 +4,16 @@ import { IBooleanRule } from "./rule.interface";
 
 export default class FalsyRule implements IBooleanRule {
     static ruleName = 'boolean.rule.falsy';
-    static errorMessage = 'The value is not falsy';
+    errorMessage: string = 'The value is not falsy';
   
     constructor(errorMsg?: string) {
-      if (errorMsg) FalsyRule.errorMessage = errorMsg;
+      if (errorMsg) this.errorMessage = errorMsg;
     }
   
     validate(value: boolean): boolean | ValidationError {
       if (value) {
         return errorContext.createError({
-          message: FalsyRule.errorMessage,
+          message: this.errorMessage,
           type: FalsyRule.ruleName,
           path: '',
           value: value,

@@ -10,6 +10,7 @@ import TruthyRule from "./rules/truthy.rule";
 import FalsyRule from "./rules/falsy.rule";
 import TruthyFalsyChecker from "../../helpers/TruthyFalsyChecker";
 import CustomRule from "./rules/custom.rule";
+import { IValidatorBuilder } from "../../common/validator.builder.interface";
 
 class BooleanValidator implements IValidator<boolean> {
   private rules: IBooleanRule[] = [];
@@ -51,7 +52,7 @@ class BooleanValidator implements IValidator<boolean> {
   }
 }
 
-class BooleanValidatorBuilder extends ValidatorTemplate<boolean> {
+class BooleanValidatorBuilder extends ValidatorTemplate<boolean> implements IValidatorBuilder<boolean> {
   private validator: BooleanValidator;
   [key: string]: any;
 
@@ -77,11 +78,6 @@ class BooleanValidatorBuilder extends ValidatorTemplate<boolean> {
     this.validator.addRule(rule);
     return this;
   }
-
-  // trueFalse(errMsg: string) {
-  //     this.validator.addRule(new TrueFalseRule(errMsg));
-  //     return this;
-  // }
 
   truthy(errMsg?: string) {
     this.validator.addRule(new TruthyRule(errMsg));
