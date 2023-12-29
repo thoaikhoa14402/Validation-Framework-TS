@@ -13,7 +13,7 @@ import VFT from "../..";
 
 
 // ===================== TRUE FALSE VALIDATION BY FUNCTION=====================
-// const boolValidator = VFT.boolean().truthy();
+// const boolValidator = VFT.boolean();
 
 // const isPrime: (num: number) => boolean = num => {
 //   for (let i: number = 2, s = Math.sqrt(num); i <= s; i++) {
@@ -36,7 +36,7 @@ import VFT from "../..";
 // }
 
 // ===================== TRUE FALSE VALIDATION BY TERNARY OPERATOR =====================
-// const boolValidator = VFT.boolean().truthy();
+// const boolValidator = VFT.boolean();
 
 // const num: number = 0;
 

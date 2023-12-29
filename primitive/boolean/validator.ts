@@ -8,7 +8,7 @@ import { ValidatorTemplate } from "../../common/validator.template";
 import { Stack } from "../../helpers/stack";
 import TruthyRule from "./rules/truthy.rule";
 import FalsyRule from "./rules/falsy.rule";
-import TruthyFalsyChecker from "../../helpers/TruthyFalsyChecker";
+// import TruthyFalsyChecker from "../../helpers/TruthyFalsyChecker";
 
 class BooleanValidator implements IValidator<boolean> {
     private rules: IBooleanRule[] = [];

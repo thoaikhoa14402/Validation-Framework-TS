@@ -54,7 +54,7 @@ try {
 
 
 // ===================== NOT EMPTY VALIDATION =====================
-const notEmptyValidator = VFT.string().notEmpty('must be not empty');
+// const notEmptyValidator = VFT.string().notEmpty('must be not empty');
 
 // try {
 //     // const result3 = notEmptyValidator.validate('20127043@student.hcmus.edu.vn'); // expected true
@@ -109,14 +109,14 @@ const notEmptyValidator = VFT.string().notEmpty('must be not empty');
 // }
 
 //===================== SPECIAL CHARACTER CASE =====================
-const upperCaseValidator = VFT.string().upperCase().specialCharacter();
-try {
-    const customString = upperCaseValidator.validate('abc#');
-    console.log("Result of custom validator: ", customString);
-} catch(err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
-}
+// const upperCaseValidator = VFT.string().upperCase().specialCharacter();
+// try {
+//     const customString = upperCaseValidator.validate('Abc#');
+//     console.log("Result of custom validator: ", customString);
+// } catch(err: any) {
+//     console.log('Error messages: ', err.message);
+//     console.log('Validation Errors: ', err.validationErrors);
+// }
 
 // ===================== SPECIAL CASE =====================
 // try {

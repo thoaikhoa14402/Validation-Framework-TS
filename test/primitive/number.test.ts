@@ -65,16 +65,16 @@ import VFT from "../..";
 // }
 
 // ===================== DECIMAL VALIDATION =====================
-const maxValidator = VFT.number().decimal();
-try {
-//   const result1 = maxValidator.validate(123.456); // expected true
-  const result1 = maxValidator.validate(7); // expected false
+// const maxValidator = VFT.number().decimal();
+// try {
+// //   const result1 = maxValidator.validate(123.456); // expected true
+//   const result1 = maxValidator.validate(7); // expected false
 
-  console.log("Result of max validator: ", result1);
-} catch (err: any) {
-   console.log('Error messages: ', err.message);
-   console.log('Validation Errors: ', err.validationErrors);
-}
+//   console.log("Result of max validator: ", result1);
+// } catch (err: any) {
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
+// }
 
 // ===================== POSITIVE VALIDATION TRUE =====================
 // const positiveValidator = VFT.number().positive();
