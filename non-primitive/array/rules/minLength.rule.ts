@@ -1,10 +1,9 @@
-import { IArrayRule } from "./rule.interface";
-import { ValidationError } from "../../../common/errors/validation.error";
 import errorContext from "../../../common/errors/error.ctx";
-
-export default class MinLengthRule implements IArrayRule {
+import { ValidationError } from "../../../common/errors/validation.error";
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class MinLengthRule implements IValidatorRule {
   static ruleName = 'array.rule.min';
- errorMessage: string = "The length of array is longer than minimum"
+  errorMessage: string = "The length of array is longer than minimum"
   private min: number;
 
   constructor(min: number,errorMsg?: string) {

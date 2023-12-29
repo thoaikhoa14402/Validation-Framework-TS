@@ -1,8 +1,7 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { INumberRule } from "./rule.interface";
-
-export default class RangeRule implements INumberRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class RangeRule implements IValidatorRule {
   static ruleName = 'number.rule.range';
   errorMessage: string = 'The number is not within the specified range';
   private min: number;

@@ -1,8 +1,7 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { INumberRule } from "./rule.interface";
-
-export default class IntegerRule implements INumberRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class IntegerRule implements IValidatorRule {
   static ruleName = 'number.rule.integer';
   errorMessage: string = 'The number is not a integer'
 

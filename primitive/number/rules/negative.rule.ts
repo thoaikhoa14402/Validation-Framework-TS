@@ -1,8 +1,7 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { INumberRule } from "./rule.interface";
-
-export default class NegativeRule implements INumberRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class NegativeRule implements IValidatorRule {
   static ruleName = 'number.rule.negative';
   errorMessage: string = 'The number is not a negative number'
 

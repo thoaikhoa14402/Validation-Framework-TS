@@ -1,10 +1,9 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { IDateRule } from "./rule.interface";
-
-export default class IsValid implements IDateRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class IsValidRule implements IValidatorRule {
   static ruleName = 'date.rule.valid';
- errorMessage: string = 'The date is invalid'
+  errorMessage: string = 'The date is invalid'
 
   constructor(errorMsg?: string) {
     if (errorMsg) this.errorMessage = errorMsg;
@@ -14,7 +13,7 @@ export default class IsValid implements IDateRule {
     if(isNaN(new Date(value).getTime())) {
       return errorContext.createError({
         message: this.errorMessage,
-        type: IsValid.ruleName,
+        type: IsValidRule.ruleName,
         path: '',
         value: value,
       });

@@ -1,10 +1,9 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { IDateRule } from "./rule.interface";
-
-export default class Equal implements IDateRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class EqualRule implements IValidatorRule {
   static ruleName = 'date.rule.equal';
- errorMessage: string = 'The date is not equal to the threshold'
+  errorMessage: string = 'The date is not equal to the threshold'
   private threshold: string;
 
   constructor(threshold: string, errorMsg?: string) {
@@ -16,7 +15,7 @@ export default class Equal implements IDateRule {
     if(Date.parse(value) !== Date.parse(this.threshold)) {
       return errorContext.createError({
         message: this.errorMessage,
-        type: Equal.ruleName,
+        type: EqualRule.ruleName,
         path: '',
         value: value,
       });

@@ -1,9 +1,7 @@
-import { INumberRule } from "./rule.interface";
 import errorContext from "../../../common/errors/error.ctx";
 import { ValidationError } from "../../../common/errors/validation.error";
-
-// used for an arbitrary regex to match the value 
-export default class RegexMatchingRule implements INumberRule { 
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class RegexMatchingRule implements IValidatorRule { 
     private regex: RegExp;
     static ruleName = "number.rule.regex";
     errorMessage: string = "The number does not match the regex pattern"

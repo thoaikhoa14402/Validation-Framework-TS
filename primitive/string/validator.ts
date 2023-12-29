@@ -3,21 +3,21 @@ import MinLengthRule from "./rules/minLength.rule";
 import MaxLengthRule from "./rules/maxLength.rule";
 import EmailRule from "./rules/email.rule";
 import RegexMatchingRule from "./rules/regex.rule";
-import { IStringRule } from "./rules/rule.interface";
-import { IValidator, NonNullable } from "../../common/validator.interface";
-import { Result } from "../../common/result.interface";
 import CustomRule from "./rules/custom.rule";
+import UppercaseRule from "./rules/upperCase.rule";
+import { IValidator, NonNullable } from "../../common/validator/validator.interface";
+import { Result } from "../../common/result.interface";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 import { ValidationError } from "../../common/errors/validation.error";
-import { ValidatorTemplate } from "../../common/validator.template";
-import UppercaseRule from "./rules/upperCase.rule";
+import { ValidatorTemplate } from "../../common/validator/validator.template";
 import { SpecialCharacter } from "./rules";
-import { IValidatorBuilder } from "../../common/validator.builder.interface";
+import { IValidatorBuilder } from "../../common/validator/validator.builder.interface";
+import { IValidatorRule } from "../../common/validator/validator.rule.interface";
 
 class StringValidator implements IValidator<string> {
-    private rules: IStringRule[] = []; // string validation strategies
+    private rules: IValidatorRule[] = []; // string validation strategies
 
-    constructor(rules?: IStringRule[]) {
+    constructor(rules?: IValidatorRule[]) {
         if (Array.isArray(rules)) {
             this.rules = rules;
         }
@@ -47,7 +47,7 @@ class StringValidator implements IValidator<string> {
         return ok(value);
     }
 
-    addRule(rule: IStringRule)     {
+    addRule(rule: IValidatorRule)     {
         this.rules.push(rule);
     }
 }   

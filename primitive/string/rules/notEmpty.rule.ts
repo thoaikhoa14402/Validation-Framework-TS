@@ -1,8 +1,7 @@
-import { IStringRule } from "./rule.interface";
-import { ValidationError } from "../../../common/errors/validation.error";
 import errorContext from "../../../common/errors/error.ctx";
-
-export default class NotEmptyRule implements IStringRule {
+import { ValidationError } from "../../../common/errors/validation.error";
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class NotEmptyRule implements IValidatorRule {
   static ruleName = 'string.rule.notEmpty';
   errorMessage: string = "The string is empty"
 

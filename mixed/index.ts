@@ -1,1 +1,1 @@
-export {default as mixed} from './validator';
+export { default as mixed } from './validator';

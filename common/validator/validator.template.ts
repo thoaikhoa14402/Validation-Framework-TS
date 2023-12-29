@@ -1,7 +1,7 @@
-import { ValidationError } from "./errors/validation.error";
-import { ValidationErrors } from "./errors/validation.error";
-import { Stack } from "../helpers/stack";
-import { Result } from "./result.interface";
+import { ValidationError } from "../errors/validation.error";
+import { ValidationErrors } from "../errors/validation.error";
+import { Stack } from "../../helpers/stack";
+import { Result } from "../result.interface";
 
 export abstract class ValidatorTemplate<T> {
   constructor() {}

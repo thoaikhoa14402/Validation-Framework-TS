@@ -1,10 +1,9 @@
-import { IArrayRule } from "./rule.interface";
-import { ValidationError } from "../../../common/errors/validation.error";
 import errorContext from "../../../common/errors/error.ctx";
-
-export default class MaxLengthRule implements IArrayRule {
+import { ValidationError } from "../../../common/errors/validation.error";
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class MaxLengthRule implements IValidatorRule {
   static ruleName = 'array.rule.max';
- errorMessage: string = "The length of array is longer than maximum"
+  errorMessage: string = "The length of array is longer than maximum"
   private max: number;
 
   constructor(max: number,errorMsg?: string) {

@@ -1,5 +1,5 @@
 import VFT from "../..";
-import { ValidatorTemplate } from "../../common/validator.template";
+import { ValidatorTemplate } from "../../common/validator/validator.template";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== CHECK DATE IS VALID FORMAT YYYY/MM/DD =====================

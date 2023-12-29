@@ -1,8 +1,7 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { INumberRule } from "./rule.interface";
-
-export default class DecimalRule implements INumberRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class DecimalRule implements IValidatorRule {
   static ruleName = 'number.rule.decimal';
   errorMessage: string = 'The value is not a decimal number';
 

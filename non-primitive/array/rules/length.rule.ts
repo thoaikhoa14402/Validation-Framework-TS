@@ -1,10 +1,9 @@
-import { IArrayRule } from "./rule.interface";
-import { ValidationError } from "../../../common/errors/validation.error";
 import errorContext from "../../../common/errors/error.ctx";
-
-export default class LengthRule implements IArrayRule {
+import { ValidationError } from "../../../common/errors/validation.error";
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class LengthRule implements IValidatorRule {
   static ruleName = "array.rule.length";
- errorMessage: string = "The length of array is not equal length value";
+  errorMessage: string = "The length of array is not equal to the value";
   private length: number;
 
   constructor(length: number, errorMsg?: string) {

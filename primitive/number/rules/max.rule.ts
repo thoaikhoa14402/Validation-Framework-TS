@@ -1,8 +1,7 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { INumberRule } from "./rule.interface";
-
-export default class MaxRule implements INumberRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class MaxRule implements IValidatorRule {
   static ruleName = 'number.rule.max';
   errorMessage: string = 'The number is greater than maximum'
   private max: number;

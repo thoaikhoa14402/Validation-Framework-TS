@@ -1,9 +1,8 @@
+import errorCtx from "../common/errors/error.ctx";
 import { ValidationErrorContext } from "../common/errors/error.ctx";
 import { ValidationError } from "../common/errors/validation.error";
-import errorCtx from "../common/errors/error.ctx";
-import { IMixedRule } from "./rule.interface";
-
-export default class MixedRule implements IMixedRule {
+import { IValidatorRule } from "../common/validator/validator.rule.interface";
+export default class MixedRule implements IValidatorRule {
   private callback: (
     value: any,
     errCtx?: ValidationErrorContext

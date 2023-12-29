@@ -1,8 +1,7 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { IBooleanRule } from "./rule.interface";
-
-export default class FalsyRule implements IBooleanRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class FalsyRule implements IValidatorRule {
     static ruleName = 'boolean.rule.falsy';
     errorMessage: string = 'The value is not falsy';
   

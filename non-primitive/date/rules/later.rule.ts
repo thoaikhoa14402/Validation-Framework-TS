@@ -1,10 +1,9 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { IDateRule } from "./rule.interface";
-
-export default class Later implements IDateRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class LaterRule implements IValidatorRule {
   static ruleName = 'date.rule.later';
- errorMessage: string = 'The date is not later than the threshold'
+  errorMessage: string = 'The date is not later than the threshold'
   private threshold: string;
 
   constructor(threshold: string, errorMsg?: string) {
@@ -16,7 +15,7 @@ export default class Later implements IDateRule {
     if(Date.parse(value) <= Date.parse(this.threshold)) {
       return errorContext.createError({
         message: this.errorMessage,
-        type: Later.ruleName,
+        type: LaterRule.ruleName,
         path: '',
         value: value,
       });

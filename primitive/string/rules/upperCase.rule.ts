@@ -1,8 +1,7 @@
 import { ValidationError } from "../../../common/errors/validation.error";
-import { IStringRule } from "./rule.interface";
 import { errorContext } from "../../../common/errors";
-
-export default class UppercaseRule implements IStringRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class UppercaseRule implements IValidatorRule {
   static ruleName = 'string.rule.uppercase';
   errorMessage: string = 'The value does not contain uppercase characters';
 

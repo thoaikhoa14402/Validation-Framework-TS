@@ -1,8 +1,7 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { IDateRule } from "./rule.interface";
-
-export default class LeapYearRule implements IDateRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class LeapYearRule implements IValidatorRule {
   static ruleName = 'date.rule.leapYear';
  errorMessage: string = 'The year is not a leap year';
 

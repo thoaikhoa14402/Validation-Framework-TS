@@ -1,8 +1,8 @@
 import { Result } from "../../common/result.interface";
-import { IValidator, NonNullable } from "../../common/validator.interface";
+import { IValidator, NonNullable } from "../../common/validator/validator.interface";
 import { Stack } from "../../helpers/stack";
 import { ValidationError } from "../../common/errors/validation.error";
-import { ValidatorTemplate } from "../../common/validator.template";
+import { ValidatorTemplate } from "../../common/validator/validator.template";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 import { errorContext } from "../../common/errors";
 

@@ -1,8 +1,7 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { IStringRule } from "./rule.interface";
-
-export default class SpecialCharacterRule implements IStringRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class SpecialCharacterRule implements IValidatorRule {
   static ruleName = 'string.rule.specialCharacter';
   errorMessage: string = 'The string does not contain special characters';
 
