@@ -46,13 +46,14 @@ class StringValidator implements IValidator<string> {
         return ok(value);
     }
 
-    addRule(rule: IStringRule) {
+    addRule(rule: IStringRule)     {
         this.rules.push(rule);
     }
 }   
 
 class StringValidatorBuilder extends ValidatorTemplate<string> {
     private validator: StringValidator;
+    [key: string]: any;
 
     constructor() {
         super();
@@ -111,6 +112,20 @@ class StringValidatorBuilder extends ValidatorTemplate<string> {
         this.validator.addRule(new SpecialCharacter(errMsg));
         return this;
     }
+
+    addMethod(
+        name: string,
+        callback: (
+          value: string,
+          errCtx?: ValidationErrorContext
+        ) => boolean | ValidationError
+      ) {
+        this[name] = () => {
+          this.validator.addRule(new CustomRule(callback));
+          return this;
+        };
+        return this;
+      }
     
 }
 

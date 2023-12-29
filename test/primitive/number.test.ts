@@ -1,4 +1,5 @@
 import VFT from "../..";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== MAX LENGTH VALIDATION =====================
 // const maxValidator = VFT.number().integer().min(5).negative();
@@ -19,10 +20,9 @@ import VFT from "../..";
 //     const result2 = regexValidator.validate(18);
 //     console.log("Result of regex validator: ", result2);
 // } catch(err: any) {
-    // console.log('Error messages: ', err.message);
-    // console.log('Validation Errors: ', err.validationErrors);
+// console.log('Error messages: ', err.message);
+// console.log('Validation Errors: ', err.validationErrors);
 // }
-
 
 // ===================== CUSTOM VALIDATION =====================
 // const customValidator = VFT.number().test((value: number, errCtx: any) => {
@@ -40,8 +40,8 @@ import VFT from "../..";
 //   // const customString = customValidator.validate('@20127043'); // expected error
 //   console.log('Result of custom validator: ', customString);
 // } catch (err: any) {
-    // console.log('Error messages: ', err.message);
-    // console.log('Validation Errors: ', err.validationErrors);
+// console.log('Error messages: ', err.message);
+// console.log('Validation Errors: ', err.validationErrors);
 // }
 
 // ===================== SPECIAL CASE =====================
@@ -115,3 +115,31 @@ import VFT from "../..";
 //   console.log('Error messages: ', err.message);
 //   console.log('Validation Errors: ', err.validationErrors);
 // }
+
+// ===================== ADDMETHOD VALIDATION TRUE =====================
+const mixedValidator = VFT.number()
+  .addMethod("isGreater", (value: number, errCtx: ValidationErrorContext) => {
+    return value > 3
+      ? true
+      : errCtx!.createError({
+          message: "The number is not greater than the allowed value.",
+          value: value,
+        });
+  })
+  .addMethod("isLess", (value: number, errCtx: ValidationErrorContext) => {
+    return value < 5
+      ? true
+      : errCtx!.createError({
+          message: "The number is not less than the allowed value.",
+          value: value,
+        });
+  });
+
+const chainValidator = mixedValidator.isGreater().isLess().negative();
+try {
+  const result1 = chainValidator.validate(2, { stopOnFailure: false });
+  console.log("Result of mixed validator: ", result1);
+} catch (err: any) {
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
+}

@@ -1,18 +1,21 @@
 import VFT from "../..";
 import { ValidatorTemplate } from "../../common/validator.template";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== CHAIN VALIDATION =====================
-const chainValidator = VFT.string().notEmpty().minLength(5, 'must be at least 5 characters long').email('must be a valid email address');
+const chainValidator = VFT.string()
+  .notEmpty()
+  .minLength(5, "must be at least 5 characters long")
+  .email("must be a valid email address");
 
 try {
-    const result1 = chainValidator.validate('nguyenthoaidangkhoa@gmail.com'); // expected true
-    // const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
-    console.log('Result of validation: ', result1);
+  const result1 = chainValidator.validate("nguyenthoaidangkhoa@gmail.com"); // expected true
+  // const result1 = chainValidator.validate('@@@', {stopOnFailure: false}); // expected error
+  console.log("Result of validation: ", result1);
 } catch (err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
 }
-
 
 // ===================== MAX LENGTH VALIDATION =====================
 // const maxLengthValidator = VFT.string().maxLength(5, 'must be at most 5 characters long');
@@ -22,10 +25,9 @@ try {
 //     const result1 = maxLengthValidator.validate('123456'); // expected error
 //     console.log('Result of max length validation: ', result1);
 // } catch (err: any) {
-    // console.log('Error messages: ', err.message);
-    // console.log('Validation Errors: ', err.validationErrors);
+// console.log('Error messages: ', err.message);
+// console.log('Validation Errors: ', err.validationErrors);
 // }
-
 
 // ===================== MIN LENGTH VALIDATION =====================
 // const minLengthValidator = VFT.string().minLength(5, 'must be at least 5 characters long');
@@ -39,7 +41,6 @@ try {
 //    console.log('Validation Errors: ', err.validationErrors);
 // }
 
-
 // ===================== EMAIL VALIDATION =====================
 // const emailValidator = VFT.string().email('must be a valid email address');
 
@@ -52,7 +53,6 @@ try {
 //     console.log('Validation Errors: ', err.validationErrors);
 // }
 
-
 // ===================== NOT EMPTY VALIDATION =====================
 // const notEmptyValidator = VFT.string().notEmpty('must be not empty');
 
@@ -64,7 +64,6 @@ try {
 //     console.log('Error messages: ', err.message);
 //     console.log('Validation Errors: ', err.validationErrors);
 // }
-
 
 // ===================== ARBITRARY REGEX VALIDATION =====================
 // let validIP = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
@@ -80,8 +79,7 @@ try {
 //     console.log('Validation Errors: ', err.validationErrors);
 // }
 
-
-// ===================== CUSTOM VALIDATION ===================== 
+// ===================== CUSTOM VALIDATION =====================
 // const customValidator = VFT.string().test((value: string, errCtx: any) => {
 //     if (value.startsWith('@')) {
 //         return true;
@@ -90,8 +88,8 @@ try {
 // });
 
 // try {
-// // const customString = customValidator.validate('@20127043'); // expected true 
-// const customString = customValidator.validate('20127043'); // expected error 
+// // const customString = customValidator.validate('@20127043'); // expected true
+// const customString = customValidator.validate('20127043'); // expected error
 // console.log('Result of custom validator: ', customString);
 // } catch (err: any) {
 //     console.log('Error messages: ', err.message);
@@ -111,7 +109,7 @@ try {
 //===================== SPECIAL CHARACTER CASE =====================
 // const upperCaseValidator = VFT.string().upperCase().specialCharacter();
 // try {
-//     const customString = upperCaseValidator.validate('Abc#');
+//     const customString = upperCaseValidator.validate('abc#');
 //     console.log("Result of custom validator: ", customString);
 // } catch(err: any) {
 //     console.log('Error messages: ', err.message);
@@ -125,4 +123,39 @@ try {
 // } catch(err: any) {
 //     console.log('Error messages: ', err.message);
 //     console.log('Validation Errors: ', err.validationErrors);
+// }
+
+// ===================== MIXED VALIDATION TRUE =====================
+// const mixedValidator = VFT.string()
+//   .addMethod("beginWithA", (x: string, errCtx: ValidationErrorContext) => {
+//     return x[0] === "a"
+//       ? true
+//       : errCtx!.createError({
+//           message: "The string does not begin with 'a' character",
+//           value: x,
+//         });
+//   })
+//   .addMethod("endWithB", (x: string, errCtx: ValidationErrorContext) => {
+//     return x[x.length-1] === "b"
+//       ? true
+//       : errCtx!.createError({
+//           message: "The string does not end with 'b' character",
+//           value: x,
+//         });
+//   })
+
+// const chainValidator = mixedValidator
+//   .beginWithA()
+//   .endWithB()
+//   .maxLength(5, "must be at most 5 characters long");
+
+// try {
+// //   const result1 = chainValidator.validate("acdeb", { stopOnFailure: false }); //Expected true
+// //   const result1 = chainValidator.validate("acccccb", { stopOnFailure: false });//Expected false
+// //   const result1 = chainValidator.validate("abcdh", { stopOnFailure: false });//Expected false
+//   const result1 = chainValidator.validate("bbcda", { stopOnFailure: false });//Expected false
+//   console.log("Result of mixed validator: ", result1);
+// } catch (err: any) {
+//   console.log("Error messages: ", err.message);
+//   console.log("Validation Errors: ", err.validationErrors);
 // }

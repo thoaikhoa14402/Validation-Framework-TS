@@ -23,4 +23,5 @@ export default class MaxLengthRule implements IStringRule {
     }
     return true;
   }
+
 }

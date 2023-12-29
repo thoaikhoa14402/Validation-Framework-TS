@@ -1,4 +1,5 @@
 import VFT from "../..";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== TRUE FALSE VALIDATION BY BOOLEAN=====================
 // const boolValidator = VFT.boolean().truthy();
@@ -10,7 +11,6 @@ import VFT from "../..";
 //    console.log('Error messages: ', err.message);
 //    console.log('Validation Errors: ', err.validationErrors);
 // }
-
 
 // ===================== TRUE FALSE VALIDATION BY FUNCTION=====================
 // const boolValidator = VFT.boolean();
@@ -51,3 +51,25 @@ import VFT from "../..";
 //   console.log('Validation Errors: ', err.validationErrors);
 // }
 
+// ===================== MIXED VALIDATION =====================
+const b = VFT.boolean().addMethod(
+  "isCheck",
+  (value: boolean, errCtx: ValidationErrorContext) => {
+    return value
+      ? true
+      : errCtx!.createError({
+          message: "The value is false",
+          value: value.toString(),
+        });
+  }
+);
+
+const boolValidator = b.isCheck();
+
+try {
+  const result1 = boolValidator.validate(false, { stopOnFailure: false });
+  console.log("Result of boolean validator: ", result1);
+} catch (err: any) {
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
+}
