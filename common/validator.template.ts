@@ -1,72 +1,79 @@
-import { ValidationErrorContext } from "./errors/error.ctx";
 import { ValidationError } from "./errors/validation.error";
 import { ValidationErrors } from "./errors/validation.error";
 import { Stack } from "../helpers/stack";
 import { Result } from "./result.interface";
 
 export abstract class ValidatorTemplate<T> {
-    constructor() {}
-    abstract _typeCheck(value: unknown): value is NonNullable<any> 
-    abstract check(value: unknown, options?: {stopOnFailure: boolean}, stack?: Stack<keyof T>) : (ValidationError | Result<T>)[] | Result<T>;
-    
-    validate(value: unknown, options = { stopOnFailure: true }): Result<T> | Result<T>[] {
-        try {
-            // Step 1: Check expected type
-            if (!(this._typeCheck(value))) {
-                throw Error(`${typeof value} is not an expected type!`);
-            }
-            // Step 2: Check value is null or undefined
-            if (value === null || value === undefined) {
-                throw Error('Value must not be null or undefined!');
-            }
-            // Step 3: Validate the input value
-            const result = this.check(value, options) as Result<T> | (Result<T> | ValidationError)[];
+  constructor() {}
+  abstract _typeCheck(value: unknown): value is NonNullable<any>;
+  abstract check(
+    value: unknown,
+    options?: { stopOnFailure: boolean },
+    stack?: Stack<keyof T>
+  ): (ValidationError | Result<T>)[] | Result<T>;
 
-            // Step 4: Return result 
-            // If result is an array of validation errors or success messages
-            if (Array.isArray(result)) {
-                // Filter array of validation error to capture stack trace for every single validation error
-                result.forEach((value: any, index) => {
-                    if (value instanceof ValidationError) {
-                        Error.captureStackTrace(result[index], this.validate);
-                    }
-                });
+  validate(
+    value: unknown,
+    options = { stopOnFailure: true }
+  ): Result<T> | Result<T>[] {
+    try {
+      // Step 1: Check expected type
+      if (!this._typeCheck(value)) {
+        throw Error(`${typeof value} is not an expected type!`);
+      }
+      // Step 2: Check value is null or undefined
+      if (value === null || value === undefined) {
+        throw Error("Value must not be null or undefined!");
+      }
+      // Step 3: Validate the input value
+      const result = this.check(value, options) as
+        | Result<T>
+        | (Result<T> | ValidationError)[];
 
-                // Filter array of validation error 
-                const errors = result.filter((el: ValidationError | Result<T>) => {
-                    return el instanceof ValidationError;
-                }) as ValidationError[];
+      // Step 4: Return result
+      // If result is an array of validation errors or success messages
+      if (Array.isArray(result)) {
+        // Filter array of validation error to capture stack trace for every single validation error
+        result.forEach((value: any, index) => {
+          if (value instanceof ValidationError) {
+            Error.captureStackTrace(result[index], this.validate);
+          }
+        });
 
-                // Push validation error to the global error object
-                const globalError = new ValidationErrors();
-                errors.forEach((el: ValidationError) => {
-                    globalError.pushError(el);
-                })
+        // Filter array of validation error
+        const errors = result.filter((el: ValidationError | Result<T>) => {
+          return el instanceof ValidationError;
+        }) as ValidationError[];
 
-                // Throw if errors are exist
-                if (errors.length) throw globalError;
+        // Push validation error to the global error object
+        const globalError = new ValidationErrors();
+        errors.forEach((el: ValidationError) => {
+          globalError.pushError(el);
+        });
 
-                // If errors does not exist, return array of success messages
-                return result as Result<T>[];
-            }
+        // Throw if errors are exist
+        if (errors.length) throw globalError;
 
-            return result; // Return a success message
+        // If errors does not exist, return array of success messages
+        return result as Result<T>[];
+      }
 
-        } catch(err: any) { 
-            const globalError = new ValidationErrors();
-            Error.captureStackTrace(globalError, this.validate);
-            // if err is instance of ValidationErrors 
-            if (err instanceof ValidationErrors) {
-                err.getValidationErrors().forEach((el: ValidationError) => {
-                    globalError.pushError(el);
-                })
-            }
-            // if just one error (instance of ValidationError class) by setting stopOnFailure = true
-            else {
-                Error.captureStackTrace(err, this.validate)
-                globalError.pushError(err);
-            }
-            throw globalError;
-        }
+      return result; // Return a success message
+    } catch (err: any) {
+      const globalError = new ValidationErrors();
+      Error.captureStackTrace(globalError, this.validate);
+      // if err is instance of ValidationErrors
+      if (err instanceof ValidationErrors) {
+        err.getValidationErrors().forEach((el: ValidationError) => {
+          globalError.pushError(el);
+        });
+      }
+      // if just one error (instance of ValidationError class) by setting stopOnFailure = true
+      else {
+        Error.captureStackTrace(err, this.validate);
+        globalError.pushError(err);
+      }
+      throw globalError;
     }
+  }
 }

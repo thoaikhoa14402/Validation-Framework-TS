@@ -10,7 +10,6 @@ import {
   MinRule,
   NegativeRule,
   PositiveRule,
-  MatchingRule,
   RangeRule,
   DecimalRule,
 } from "./rules";

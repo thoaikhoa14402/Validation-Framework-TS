@@ -1,11 +1,17 @@
 {
-  "name": "project",
+  "name": "validation-framework-ts-8",
   "version": "1.0.0",
+  "types": "dist/index.d.ts",
   "description": "",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc"
   },
+  "prepare": "npm run build",
   "keywords": [],
   "author": "",
   "license": "ISC",
