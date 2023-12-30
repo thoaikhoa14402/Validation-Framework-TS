@@ -1,21 +1,20 @@
 import { errorContext } from "../../../common/errors";
 import { ValidationError } from "../../../common/errors/validation.error";
-import { INumberRule } from "./rule.interface";
-
-export default class MinRule implements INumberRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class MinRule implements IValidatorRule {
   static ruleName = 'number.rule.min';
-  static errorMessage = 'The number is less than minimum'
+  errorMessage: string = 'The number is less than minimum'
   private min: number;
 
   constructor(min: number, errorMsg?: string) {
     this.min = min;
-    if (errorMsg) MinRule.errorMessage = errorMsg;
+    if (errorMsg) this.errorMessage = errorMsg;
   }
 
   validate(value: number): boolean | ValidationError {
     if(!(value >= this.min)) {
       return errorContext.createError({
-        message: MinRule.errorMessage,
+        message: this.errorMessage,
         type: MinRule.ruleName,
         path: '',
         value: value,

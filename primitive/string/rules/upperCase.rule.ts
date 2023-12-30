@@ -1,19 +1,18 @@
 import { ValidationError } from "../../../common/errors/validation.error";
-import { IStringRule } from "./rule.interface";
 import { errorContext } from "../../../common/errors";
-
-export default class UppercaseRule implements IStringRule {
+import { IValidatorRule } from "../../../common/validator/validator.rule.interface";
+export default class UppercaseRule implements IValidatorRule {
   static ruleName = 'string.rule.uppercase';
-  static errorMessage = 'The value does not contain uppercase characters';
+  errorMessage: string = 'The value does not contain uppercase characters';
 
   constructor(errorMsg?: string) {
-    if (errorMsg) UppercaseRule.errorMessage = errorMsg;
+    if (errorMsg) this.errorMessage = errorMsg;
   }
 
   validate(value: string): boolean | ValidationError {
     if (typeof value !== 'string' || !/[A-Z]/.test(value)) {
       return errorContext.createError({
-        message: UppercaseRule.errorMessage,
+        message: this.errorMessage,
         type: UppercaseRule.ruleName,
         path: '',
         value: value,

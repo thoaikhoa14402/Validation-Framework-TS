@@ -1,19 +1,18 @@
-import { IValidator } from "../../common/validator.interface";
-import { IArrayRule } from "./rules/rule.interface";
-import { Result } from "../../common/result.interface";
-import { ValidationError } from "../../common/errors/validation.error";
 import NotEmptyRule from "./rules/notEmpty.rule";
 import MinLengthRule from "./rules/minLength.rule";
 import MaxLengthRule from "./rules/maxLength.rule";
 import LengthRule from "./rules/length.rule";
-import { ValidatorTemplate } from "../../common/validator.template";
-
+import { IValidator } from "../../common/validator/validator.interface";
+import { Result } from "../../common/result.interface";
+import { ValidationError } from "../../common/errors/validation.error";
+import { ValidatorTemplate } from "../../common/validator/validator.template";
+import { IValidatorRule } from "../../common/validator/validator.rule.interface";
 class ArrayValidator<T extends any[]> implements IValidator<T> {
-  private rules: IArrayRule[] = []; // string validation strategies
+  private rules: IValidatorRule[] = []; // string validation strategies
   private iValidator?: IValidator<any>;
   private results: (ValidationError | Result<T>)[];
 
-  constructor(rules?: IArrayRule[]) {
+  constructor(rules?: IValidatorRule[]) {
     if (Array.isArray(rules)) {
       this.rules = rules;
     }
@@ -74,7 +73,7 @@ class ArrayValidator<T extends any[]> implements IValidator<T> {
       : ({ ok: true, value: value as T } as Result<T>);
   }
 
-  addRule(rule: IArrayRule) {
+  addRule(rule: IValidatorRule) {
     this.rules.push(rule);
   }
 

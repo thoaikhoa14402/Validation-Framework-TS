@@ -1,21 +1,19 @@
-import { ValidationErrorContext } from "../../common/errors/error.ctx";
-import { ValidationError } from "../../common/errors/validation.error";
-import { IBooleanRule } from "./rules/rule.interface";
-import { IValidator, NonNullable } from "../../common/validator.interface";
-import { Result } from "../../common/result.interface";
-// import CustomRule from "./rules/custom.rule";
-import { ValidatorTemplate } from "../../common/validator.template";
-import { Stack } from "../../helpers/stack";
 import TruthyRule from "./rules/truthy.rule";
 import FalsyRule from "./rules/falsy.rule";
-import TruthyFalsyChecker from "../../helpers/TruthyFalsyChecker";
 import CustomRule from "./rules/custom.rule";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
+import { ValidationError } from "../../common/errors/validation.error";
+import { IValidator, NonNullable } from "../../common/validator/validator.interface";
+import { Result } from "../../common/result.interface";
+import { ValidatorTemplate } from "../../common/validator/validator.template";
+import { IValidatorBuilder } from "../../common/validator/validator.builder.interface";
+import { IValidatorRule } from "../../common/validator/validator.rule.interface";
 
 class BooleanValidator implements IValidator<boolean> {
-  private rules: IBooleanRule[] = [];
+  private rules: IValidatorRule[] = [];
   validator: any;
 
-  constructor(rules?: IBooleanRule[]) {
+  constructor(rules?: IValidatorRule[]) {
     if (Array.isArray(rules)) {
       this.rules = rules;
     }
@@ -23,7 +21,6 @@ class BooleanValidator implements IValidator<boolean> {
 
   _typeCheck(value: any): value is NonNullable<any> {
     if (value instanceof String) value = value.valueOf();
-    // return typeof value === 'boolean' || value === undefined || value === null || typeof TruthyFalsyChecker.check(value) === "boolean";
     return typeof value === "boolean";
   }
 
@@ -46,12 +43,12 @@ class BooleanValidator implements IValidator<boolean> {
     return ok(value);
   }
 
-  addRule(rule: IBooleanRule) {
+  addRule(rule: IValidatorRule) {
     this.rules.push(rule);
   }
 }
 
-class BooleanValidatorBuilder extends ValidatorTemplate<boolean> {
+class BooleanValidatorBuilder extends ValidatorTemplate<boolean> implements IValidatorBuilder<boolean> {
   private validator: BooleanValidator;
   [key: string]: any;
 
@@ -72,16 +69,6 @@ class BooleanValidatorBuilder extends ValidatorTemplate<boolean> {
   check(value: boolean, options = { stopOnFailure: true }) {
     return this.validator.check(value, options);
   }
-
-  addRule(rule: IBooleanRule) {
-    this.validator.addRule(rule);
-    return this;
-  }
-
-  // trueFalse(errMsg: string) {
-  //     this.validator.addRule(new TrueFalseRule(errMsg));
-  //     return this;
-  // }
 
   truthy(errMsg?: string) {
     this.validator.addRule(new TruthyRule(errMsg));

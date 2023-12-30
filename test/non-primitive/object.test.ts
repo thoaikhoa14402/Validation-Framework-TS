@@ -22,8 +22,8 @@ const userSchema = VFT.object({
     },
     company: VFT.object({
         address: VFT.object({
-            city: VFT.string().notEmpty(),
-            district: VFT.string().notEmpty(),
+            city: VFT.string().notEmpty('city must be not empty'),
+            district: VFT.string().notEmpty('district must be not empty'),
             zipCode: VFT.string().matches(/^\d{5,6}$/, 'This is not valid ZIP code') // Vietnam's ZIP codes
         }),
         startDate: VFT.date().isValid(),

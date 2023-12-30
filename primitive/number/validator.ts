@@ -1,26 +1,25 @@
-import RegexMatchingRule from "./rules/regex.rule";
-import { INumberRule } from "./rules/rule.interface";
-import { IValidator, NonNullable } from "../../common/validator.interface";
-import { Result } from "../../common/result.interface";
-import { ValidationErrorContext } from "../../common/errors/error.ctx";
-import { ValidationError } from "../../common/errors/validation.error";
 import {
   IntegerRule,
   MaxRule,
   MinRule,
   NegativeRule,
   PositiveRule,
-  MatchingRule,
   RangeRule,
   DecimalRule,
 } from "./rules";
+import RegexMatchingRule from "./rules/regex.rule";
 import CustomRule from "./rules/custom.rule";
-import { ValidatorTemplate } from "../../common/validator.template";
-
+import { IValidator, NonNullable } from "../../common/validator/validator.interface";
+import { Result } from "../../common/result.interface";
+import { ValidationErrorContext } from "../../common/errors/error.ctx";
+import { ValidationError } from "../../common/errors/validation.error";
+import { ValidatorTemplate } from "../../common/validator/validator.template";
+import { IValidatorBuilder } from "../../common/validator/validator.builder.interface";
+import { IValidatorRule } from "../../common/validator/validator.rule.interface";
 class NumberValidator implements IValidator<number> {
-  private rules: INumberRule[] = []; // string validation strategies
+  private rules: IValidatorRule[] = []; // string validation strategies
 
-  constructor(rules?: INumberRule[]) {
+  constructor(rules?: IValidatorRule[]) {
     if (Array.isArray(rules)) {
       this.rules = rules;
     }
@@ -50,12 +49,12 @@ class NumberValidator implements IValidator<number> {
     return ok(value);
   }
 
-  addRule(rule: INumberRule) {
+  addRule(rule: IValidatorRule) {
     this.rules.push(rule);
   }
 }
 
-class NumberValidatorBuilder extends ValidatorTemplate<number> {
+class NumberValidatorBuilder extends ValidatorTemplate<number> implements IValidatorBuilder<number> {
   private validator: NumberValidator;
   [key: string]: any;
 

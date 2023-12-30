@@ -1,18 +1,18 @@
-import { IValidator } from "../common/validator.interface";
+import MixedRule from "./rule";
+import { IValidator } from "../common/validator/validator.interface";
 import { Result } from "../common/result.interface";
 import { ValidationError } from "../common/errors/validation.error";
-import { ValidatorTemplate } from "../common/validator.template";
-import { IMixedRule } from "./rule.interface";
-import MixedRule from "./rule";
+import { ValidatorTemplate } from "../common/validator/validator.template";
 import { ValidationErrorContext } from "../common/errors/error.ctx";
+import { IValidatorRule } from "../common/validator/validator.rule.interface";
 
 class MixedValidator<T extends any> implements IValidator<T> {
-  private rules: IMixedRule[] = []; // string validation strategies
-  private iValidator?: IValidator<any>;
-  private results: (ValidationError | Result<T>)[];
+  private rules: IValidatorRule[] = []; // string validation strategies
 
-  constructor() {
-    this.results = [];
+  constructor(rules?: IValidatorRule[]) {
+    if (Array.isArray(rules)) {
+      this.rules = rules;
+    }
   }
 
   _typeCheck<T>(value: T): value is NonNullable<T> {
@@ -38,7 +38,7 @@ class MixedValidator<T extends any> implements IValidator<T> {
     return ok(value);
   }
 
-  addRule(rule: IMixedRule) {
+  addRule(rule: IValidatorRule) {
     this.rules.push(rule);
   }
 }

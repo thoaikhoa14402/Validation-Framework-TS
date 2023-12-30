@@ -3,19 +3,18 @@ import EqualRule from "./rules/equal.rule";
 import LaterRule from "./rules/later.rule";
 import EarlierRule from "./rules/earlier.rule";
 import CustomRule from "./rules/custom.rule";
-import { IDateRule } from "./rules/rule.interface";
-import { IValidator, NonNullable } from "../../common/validator.interface";
+import { IValidator, NonNullable } from "../../common/validator/validator.interface";
 import { Result } from "../../common/result.interface";
-// import CustomRule from "./rules/custom.rule";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 import { ValidationError } from "../../common/errors/validation.error";
-import { ValidatorTemplate } from "../../common/validator.template";
+import { ValidatorTemplate } from "../../common/validator/validator.template";
 import { LeapYearRule } from "./rules";
+import { IValidatorRule } from "../../common/validator/validator.rule.interface";
 
 class DateValidator implements IValidator<string> {
-  private rules: IDateRule[] = []; // string validation strategies
+  private rules: IValidatorRule[] = []; // string validation strategies
 
-  constructor(rules?: IDateRule[]) {
+  constructor(rules?: IValidatorRule[]) {
     if (Array.isArray(rules)) {
       this.rules = rules;
     }
@@ -45,7 +44,7 @@ class DateValidator implements IValidator<string> {
     return ok(value);
   }
 
-  addRule(rule: IDateRule) {
+  addRule(rule: IValidatorRule) {
     this.rules.push(rule);
   }
 }

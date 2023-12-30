@@ -6,7 +6,7 @@ const mixedValidator = VFT.mixed()
     value === "test"
       ? true
       : errCtx!.createError({
-          message: "The string is not equal",
+          message: "The string is not equal to test",
           value: value,
         })
   )
@@ -14,7 +14,7 @@ const mixedValidator = VFT.mixed()
     value !== "test"
       ? true
       : errCtx!.createError({
-          message: "The string is equal",
+          message: "The string is equal to test",
           value: value,
         })
   );
