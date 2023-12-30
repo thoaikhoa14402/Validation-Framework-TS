@@ -58,35 +58,6 @@ const userSchema = VFT.object({
 // }
 
 try {
-    // const student = userSchema.clone().shape({
-    //     studentID: VFT.string().test((value: string, errorCtx: ValidationErrorContext) => {
-    //         if (value.startsWith('hcmus_student_')) return true;
-    //         return errorCtx.createError({
-    //             message: 'This is not a valid student ID',
-    //         })
-    //     }),
-    //     age: VFT.number().min(16),
-    //     personalAddress: VFT.string().minLength(3, 'must be at least 3 characters long'),
-    // }).validate({
-    //     name: {
-    //         firstName: 'abc',
-    //         lastName: 'xyz'
-    //     },
-    //     age: 16,
-    //     email: 'nguyenthoaidangkhoa@gmai.com',
-    //     personalAddress: 'Vo Oanh Street',
-    //     studentID: 'hcmus_student_20127043',
-    //     company: {
-    //         address: {
-    //             city: 'Ho Chi Minh',
-    //             district: 'Binh Thanh District',
-    //             zipCode: '70000'
-    //         },
-    //         startDate: '12/24/2022',
-    //         title: 'Junior',
-    //     }
-    // }, {stopOnFailure: false}) // expected true
-
     const student = userSchema.clone().shape({
         studentID: VFT.string().test((value: string, errorCtx: ValidationErrorContext) => {
             if (value.startsWith('hcmus_student_')) return true;
@@ -129,3 +100,32 @@ try {
     console.log('Error messages: ', err.message);
     console.log('Validation Errors: ', err.validationErrors);
 }
+
+// const student = userSchema.clone().shape({
+//     studentID: VFT.string().test((value: string, errorCtx: ValidationErrorContext) => {
+//         if (value.startsWith('hcmus_student_')) return true;
+//         return errorCtx.createError({
+//             message: 'This is not a valid student ID',
+//         })
+//     }),
+//     age: VFT.number().min(16),
+//     personalAddress: VFT.string().minLength(3, 'must be at least 3 characters long'),
+// }).validate({
+//     name: {
+//         firstName: 'abc',
+//         lastName: 'xyz'
+//     },
+//     age: 16,
+//     email: 'nguyenthoaidangkhoa@gmai.com',
+//     personalAddress: 'Vo Oanh Street',
+//     studentID: 'hcmus_student_20127043',
+//     company: {
+//         address: {
+//             city: 'Ho Chi Minh',
+//             district: 'Binh Thanh District',
+//             zipCode: '70000'
+//         },
+//         startDate: '12/24/2022',
+//         title: 'Junior',
+//     }
+// }, {stopOnFailure: false}) // expected true
