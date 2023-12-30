@@ -117,29 +117,92 @@ import { ValidationErrorContext } from "../../common/errors/error.ctx";
 // }
 
 // ===================== ADDMETHOD VALIDATION TRUE =====================
-const mixedValidator = VFT.number()
-  .addMethod("isGreater", (value: number, errCtx: ValidationErrorContext) => {
-    return value > 3
-      ? true
-      : errCtx!.createError({
-          message: "The number is not greater than the allowed value.",
-          value: value,
-        });
-  })
-  .addMethod("isLess", (value: number, errCtx: ValidationErrorContext) => {
-    return value < 5
-      ? true
-      : errCtx!.createError({
-          message: "The number is not less than the allowed value.",
-          value: value,
-        });
-  });
+// const mixedValidator = VFT.number()
+//   .addMethod("isGreater", (value: number, errCtx: ValidationErrorContext) => {
+//     return value > 3
+//       ? true
+//       : errCtx!.createError({
+//           message: "The number is not greater than the allowed value.",
+//           value: value,
+//         });
+//   })
+//   .addMethod("isLess", (value: number, errCtx: ValidationErrorContext) => {
+//     return value < 5
+//       ? true
+//       : errCtx!.createError({
+//           message: "The number is not less than the allowed value.",
+//           value: value,
+//         });
+//   });
 
-const chainValidator = mixedValidator.isGreater().isLess().negative();
-try {
-  const result1 = chainValidator.validate(2, { stopOnFailure: false });
-  console.log("Result of mixed validator: ", result1);
-} catch (err: any) {
-  console.log("Error messages: ", err.message);
-  console.log("Validation Errors: ", err.validationErrors);
-}
+// const chainValidator = mixedValidator.isGreater().isLess().negative();
+// try {
+//   const result1 = chainValidator.validate(2, { stopOnFailure: false });
+//   console.log("Result of mixed validator: ", result1);
+// } catch (err: any) {
+//   console.log("Error messages: ", err.message);
+//   console.log("Validation Errors: ", err.validationErrors);
+// }
+
+// ===================== CHAIN METHOD =====================
+// const validator = VFT.number().negative().min(-1).max(0.1);
+// try {
+//   // const result1 = validator.validate(-1.1, { stopOnFailure: false }); // expected false
+//   // const result1 = validator.validate(-1.0, { stopOnFailure: false }); // expected true
+//   // const result1 = validator.validate(-0.9999, { stopOnFailure: false }); // expected true
+//   // const result1 = validator.validate(0, { stopOnFailure: false }); // expected false
+//   const result1 = validator.validate(0.11, { stopOnFailure: false }); // expected false
+
+//   console.log("Result of positive validator: ", result1);
+// } catch (err: any) {
+//   console.log('Error messages: ', err.message);
+//   console.log('Validation Errors: ', err.validationErrors);
+// }
+
+// ===================== CHAIN METHOD 2 =====================
+// const validator = VFT.number().negative().min(-1).max(0.1).range(-0.5, 0.01);
+// try {
+//   // const result1 = validator.validate(-1.1, { stopOnFailure: false });
+//   // const result1 = validator.validate(-0.49, { stopOnFailure: false }); // true
+//   const result1 = validator.validate(0, { stopOnFailure: false });
+
+//   console.log("Result of positive validator: ", result1);
+// } catch (err: any) {
+//   console.log('Error messages: ', err.message);
+//   console.log('Validation Errors: ', err.validationErrors);
+// }
+
+// ===================== CHAIN METHOD 3 =====================
+// const mixedValidator = VFT.number()
+//   .addMethod("isGreaterThan3", (value: number, errCtx: ValidationErrorContext) => {
+//     return value > 3
+//       ? true
+//       : errCtx!.createError({
+//           message: "The number is not greater than the allowed value.",
+//           value: value,
+//         });
+//   })
+//   .addMethod("isLessThan5", (value: number, errCtx: ValidationErrorContext) => {
+//     return value < 5
+//       ? true
+//       : errCtx!.createError({
+//           message: "The number is not less than the allowed value.",
+//           value: value,
+//         });
+//   });
+
+// const chainValidator = mixedValidator.isGreaterThan3().isLessThan5().positive().max(4.5).min(3.5);
+// try {
+//   // const result1 = chainValidator.validate(4.4, { stopOnFailure: false }); // true
+//   // const result1 = chainValidator.validate(4.51, { stopOnFailure: false }); // false
+//   // const result1 = chainValidator.validate(4.4, { stopOnFailure: false }); // true
+//   // const result1 = chainValidator.validate(3.1, { stopOnFailure: false }); // false
+//   // const result1 = chainValidator.validate(3.51, { stopOnFailure: false }); // true
+//   const result1 = chainValidator.validate(1.9999, { stopOnFailure: false }); // false
+
+
+//   console.log("Result of mixed validator: ", result1);
+// } catch (err: any) {
+//   console.log("Error messages: ", err.message);
+//   console.log("Validation Errors: ", err.validationErrors);
+// }

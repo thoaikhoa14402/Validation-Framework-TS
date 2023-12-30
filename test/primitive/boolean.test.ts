@@ -12,6 +12,17 @@ import { ValidationErrorContext } from "../../common/errors/error.ctx";
 //    console.log('Validation Errors: ', err.validationErrors);
 // }
 
+// ===================== FALSY VALIDATION BY BOOLEAN=====================
+// const boolValidator = VFT.boolean().falsy();
+// try {
+// //   const result1 = boolValidator.validate(false, {stopOnFailure: false}); // true
+//   const result1 = boolValidator.validate(true, {stopOnFailure: false}); // false
+//   console.log("Result of boolean validator: ", result1);
+// } catch (err: any) {
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
+// }
+
 // ===================== TRUE FALSE VALIDATION BY FUNCTION=====================
 // const boolValidator = VFT.boolean();
 
@@ -72,4 +83,38 @@ import { ValidationErrorContext } from "../../common/errors/error.ctx";
 // } catch (err: any) {
 //   console.log("Error messages: ", err.message);
 //   console.log("Validation Errors: ", err.validationErrors);
+// }
+
+// ===================== MIXED VALIDATION =====================
+// const c = VFT.boolean().addMethod(
+//   "isCheck",
+//   (value: boolean, errCtx: ValidationErrorContext) => {
+//     return value
+//       ? true
+//       : errCtx!.createError({
+//           message: "The value is false",
+//           value: value.toString(),
+//         });
+//   }
+// );
+
+// const boolValidator = c.isCheck();
+
+// try {
+//   const result1 = boolValidator.validate(true, { stopOnFailure: false });
+//   console.log("Result of boolean validator: ", result1);
+// } catch (err: any) {
+//   console.log("Error messages: ", err.message);
+//   console.log("Validation Errors: ", err.validationErrors);
+// }
+
+//===================== TRUTHY FALSY VALIDATION =====================
+// const boolValidator = VFT.boolean().falsy().truthy();
+// try {
+// //   const result1 = boolValidator.validate(false, {stopOnFailure: false});
+//   const result1 = boolValidator.validate(true, {stopOnFailure: false});
+//   console.log("Result of boolean validator: ", result1);
+// } catch (err: any) {
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
 // }
