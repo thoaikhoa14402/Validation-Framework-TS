@@ -2,15 +2,15 @@ import VFT from "../..";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 // ===================== TRUE FALSE VALIDATION BY BOOLEAN=====================
-const boolValidator = VFT.boolean().truthy();
-try {
-  const result1 = boolValidator.validate(true, {stopOnFailure: false}); // expected true
-  // const result1 = boolValidator.validate(false, {stopOnFailure: false}); // expected false
-  console.log("Result of boolean validator: ", result1);
-} catch (err: any) {
-   console.log('Error messages: ', err.message);
-   console.log('Validation Errors: ', err.validationErrors);
-}
+// const boolValidator = VFT.boolean().truthy();
+// try {
+//   // const result1 = boolValidator.validate(true, {stopOnFailure: false}); // expected true
+//   const result1 = boolValidator.validate(false, {stopOnFailure: false}); // expected false
+//   console.log("Result of boolean validator: ", result1);
+// } catch (err: any) {
+//    console.log('Error messages: ', err.message);
+//    console.log('Validation Errors: ', err.validationErrors);
+// }
 
 // ===================== TRUE FALSE VALIDATION BY FUNCTION=====================
 // const boolValidator = VFT.boolean();

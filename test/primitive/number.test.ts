@@ -89,7 +89,7 @@ import { ValidationErrorContext } from "../../common/errors/error.ctx";
 // ===================== POSITIVE VALIDATION FALSE =====================
 // const positiveValidator2 = VFT.number().positive();
 // try {
-//   const positiveResult = positiveValidator.validate(-1); // expected false
+//   const positiveResult = positiveValidator2.validate(-1); // expected false
 //   console.log("Result of positive validator: ", positiveResult);
 // } catch (err: any) {
 //   console.log('Error messages: ', err.message);
