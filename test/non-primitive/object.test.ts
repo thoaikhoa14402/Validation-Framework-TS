@@ -96,6 +96,14 @@ try {
         }),
         age: VFT.number().min(16),
         personalAddress: VFT.string().minLength(3, 'must be at least 3 characters long'),
+        school: (value: string, errorCtx: ValidationErrorContext) => {
+            if (value.startsWith('University Of Science')) return true;
+            return errorCtx.createError({
+                message: 'Invalid university name.',
+                path: 'school',
+                value: value,
+            })
+        }
     }).validate({
         name: {
             firstName: 'abc',
@@ -112,7 +120,8 @@ try {
             },
             startDate: '12/24/2022',
             title: 'Junior',
-        }
+        },
+        school: "!University Of Science",
     }, {stopOnFailure: false}) // expected error
 
     console.log('student: ',student); // if object is valid
