@@ -2,7 +2,7 @@ import VFT from "../..";
 import { ValidationErrorContext } from "../../common/errors/error.ctx";
 
 const mixedValidator = VFT.mixed()
-  .addMethod("isEqual", (value: string, errCtx: ValidationErrorContext) =>
+  .addMethod("isEqual", (value: string, errCtx: any) =>
     value === "test"
       ? true
       : errCtx!.createError({

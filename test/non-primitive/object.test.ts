@@ -1,34 +1,38 @@
 import VFT from "../..";
-import errorCtx, { ValidationErrorContext } from "../../common/errors/error.ctx";
+import errorCtx, {
+  ValidationErrorContext,
+} from "../../common/errors/error.ctx";
 
 const userSchema = VFT.object({
-    name: VFT.object({
-        firstName: VFT.string().notEmpty().minLength(2),
-        lastName: VFT.string().notEmpty(),
+  name: VFT.object({
+    firstName: VFT.string().notEmpty().minLength(2),
+    lastName: VFT.string().notEmpty(),
+  }),
+  age: VFT.number().min(16),
+  email: VFT.string().email("must be an valid email address"),
+  personalAddress: (value: unknown, errCtx: ValidationErrorContext) => {
+    if (value === null) {
+      return errCtx.createError({
+        message: "Your address must not be null",
+        value: value,
+      });
+    }
+    // Value is not null, so use a string validator to validate it.
+    if (value) {
+      return VFT.string()
+        .notEmpty()
+        .validate(value as string, { stopOnFailure: false });
+    }
+  },
+  company: VFT.object({
+    address: VFT.object({
+      city: VFT.string().notEmpty("city must be not empty"),
+      district: VFT.string().notEmpty("district must be not empty"),
+      zipCode: VFT.string().matches(/^\d{5,6}$/, "This is not valid ZIP code"), // Vietnam's ZIP codes
     }),
-    age: VFT.number().min(16),
-    email: VFT.string().email('must be an valid email address'),
-    personalAddress: (value: unknown, errCtx: ValidationErrorContext) => {
-        if (value === null) {
-            return errCtx.createError({
-                message: 'Your address must not be null',
-                value: value,
-            })
-        } 
-        // Value is not null, so use a string validator to validate it.
-        if (value) {
-            return VFT.string().notEmpty().validate(value as string, {stopOnFailure: false});
-        }
-    },
-    company: VFT.object({
-        address: VFT.object({
-            city: VFT.string().notEmpty('city must be not empty'),
-            district: VFT.string().notEmpty('district must be not empty'),
-            zipCode: VFT.string().matches(/^\d{5,6}$/, 'This is not valid ZIP code') // Vietnam's ZIP codes
-        }),
-        startDate: VFT.date().isValid(),
-        title: VFT.string().notEmpty(),
-    })
+    startDate: VFT.date().isValid(),
+    title: VFT.string().notEmpty(),
+  }),
 });
 
 // try {
@@ -58,47 +62,58 @@ const userSchema = VFT.object({
 // }
 
 try {
-    const student = userSchema.clone().shape({
-        studentID: VFT.string().test((value: string, errorCtx: ValidationErrorContext) => {
-            if (value.startsWith('hcmus_student_')) return true;
-            return errorCtx.createError({
-                message: 'This is not a valid student ID',
-            })
-        }),
-        age: VFT.number().min(16),
-        personalAddress: VFT.string().minLength(3, 'must be at least 3 characters long'),
-        school: (value: string, errorCtx: ValidationErrorContext) => {
-            if (value.startsWith('University Of Science')) return true;
-            return errorCtx.createError({
-                message: 'Invalid university name.',
-                path: 'school',
-                value: value,
-            })
+  const student = userSchema
+    .clone()
+    .shape({
+      studentID: VFT.string().test(
+        (value: string, errorCtx: ValidationErrorContext) => {
+          if (value.startsWith("hcmus_student_")) return true;
+          return errorCtx.createError({
+            message: "This is not a valid student ID",
+          });
         }
-    }).validate({
+      ),
+      age: VFT.number().min(16),
+      personalAddress: VFT.string().minLength(
+        3,
+        "must be at least 3 characters long"
+      ),
+      school: (value: string, errorCtx: ValidationErrorContext) => {
+        if (value.startsWith("University Of Science")) return true;
+        return errorCtx.createError({
+          message: "Invalid university name.",
+          path: "school",
+          value: value,
+        });
+      },
+    })
+    .validate(
+      {
         name: {
-            firstName: 'abc',
+          firstName: "abc",
         },
         age: 16,
-        email: 'nguyenthoaidangkhoa@gmai.com',
-        personalAddress: 'Vo Oanh Street',
-        studentID: 'hcmus_student_20127043',
+        email: "nguyenthoaidangkhoa@gmai.com",
+        personalAddress: "Vo Oanh Street",
+        studentID: "hcmus_student_20127043",
         company: {
-            address: {
-                city: '',
-                district: '',
-                zipCode: '70000'
-            },
-            startDate: '12/24/2022',
-            title: 'Junior',
+          address: {
+            city: "",
+            district: "",
+            zipCode: "70000",
+          },
+          startDate: "12/24/2022",
+          title: "Junior",
         },
         school: "!University Of Science",
-    }, {stopOnFailure: false}) // expected error
+      },
+      { stopOnFailure: false }
+    ); // expected error
 
-    console.log('student: ',student); // if object is valid
-    } catch (err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
+  console.log("student: ", student); // if object is valid
+} catch (err: any) {
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
 }
 
 // const student = userSchema.clone().shape({

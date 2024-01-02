@@ -31,17 +31,13 @@ import VFT from "../..";
 // }
 
 // ===================== MIN LENGTH VALIDATION =====================
-const minLengthValidator2 = VFT.array()
-  .minLength(2)
-  .length(4)
-  .of(VFT.string().notEmpty());
+const minLengthValidator2 = VFT.array().of(VFT.number().negative().min(5));
 try {
-  const result1 = minLengthValidator2.validate(["1"], { // expected false
+  const result1 = minLengthValidator2.validate([1, 2, 3], {
     stopOnFailure: false,
-  }); // expected true
+  }); // expected false
   console.log("Result of max length validator: ", result1);
 } catch (err: any) {
-    console.log('Error messages: ', err.message);
-    console.log('Validation Errors: ', err.validationErrors);
+  console.log("Error messages: ", err.message);
+  console.log("Validation Errors: ", err.validationErrors);
 }
-

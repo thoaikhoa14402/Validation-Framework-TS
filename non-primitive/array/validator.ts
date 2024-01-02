@@ -119,7 +119,7 @@ class ArrayValidatorBuilder<T extends any[]> extends ValidatorTemplate<T> {
     return this;
   }
 
-  of(value: IValidator<any>) {
+  of(value: any) {
     this.validator.of(value);
     return this;
   }
