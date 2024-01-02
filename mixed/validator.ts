@@ -5,6 +5,7 @@ import { ValidationError } from "../common/errors/validation.error";
 import { ValidatorTemplate } from "../common/validator/validator.template";
 import { ValidationErrorContext } from "../common/errors/error.ctx";
 import { IValidatorRule } from "../common/validator/validator.rule.interface";
+import { errorContext } from "../common/errors";
 
 class MixedValidator<T extends any> implements IValidator<T> {
   private rules: IValidatorRule[] = []; // string validation strategies
@@ -46,10 +47,12 @@ class MixedValidator<T extends any> implements IValidator<T> {
 class MixedValidatorBuilder<T extends any> extends ValidatorTemplate<T> {
   private validator: MixedValidator<T>;
   [key: string]: any;
+  private typeCheckCb?: (value: unknown) => boolean; // validate the input value by user-defined
 
-  constructor() {
+  constructor(typeCheckCb?: (value: unknown) => boolean) {
     super();
     this.validator = new MixedValidator();
+    this.typeCheckCb = typeCheckCb;
   }
 
   _typeCheck(value: any): value is NonNullable<any> {
@@ -76,8 +79,17 @@ class MixedValidatorBuilder<T extends any> extends ValidatorTemplate<T> {
   }
 
   check(value: unknown, options = { stopOnFailure: true }) {
+    if (this.typeCheckCb) {
+      if (!this.typeCheckCb(value)) {
+        throw errorContext.createError({
+          message: 'Type mismatch error.',
+          type : 'mixed.input.validation',
+          value: value,
+        })
+      }
+    }
     return this.validator.check(value, options);
   }
 }
 
-export default () => new MixedValidatorBuilder();
+export default (typeCheckCb?: (value: unknown) => boolean) => new MixedValidatorBuilder(typeCheckCb);

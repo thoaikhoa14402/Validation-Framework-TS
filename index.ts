@@ -18,7 +18,7 @@ const allNonPrimitiveValidators = Object.entries(NonPrimitiveValidators).map(
 
 const mixedValidator = Object.entries(MixedValidator).map(
   ([key, validator]) => ({
-    [key]: () => validator() as ValidatorTemplate<any>,
+    [key]: (typeCheckCb?: (value: unknown) => boolean) => validator(typeCheckCb) as ValidatorTemplate<any>,
   })
 );
 

@@ -29,15 +29,3 @@ import VFT from "../..";
 //     console.log('Error messages: ', err.message);
 //     console.log('Validation Errors: ', err.validationErrors);
 // }
-
-// ===================== MIN LENGTH VALIDATION =====================
-const minLengthValidator2 = VFT.array().of(VFT.number().negative().min(5));
-try {
-  const result1 = minLengthValidator2.validate([1, 2, 3], {
-    stopOnFailure: false,
-  }); // expected false
-  console.log("Result of max length validator: ", result1);
-} catch (err: any) {
-  console.log("Error messages: ", err.message);
-  console.log("Validation Errors: ", err.validationErrors);
-}
